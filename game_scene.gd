@@ -43,12 +43,12 @@ func create_selected_row_button(words: Array, selected_index: int) -> Button:
     
     # Only use the selected word
     button.text = words[selected_index]
-    button.custom_minimum_size = Vector2(600, 50)  # Same width as three buttons + spacing
+    button.custom_minimum_size = Vector2(600, 100)  # Same width as three buttons + spacing
     button.mouse_filter = Control.MOUSE_FILTER_STOP
     button.mouse_default_cursor_shape = Control.CURSOR_MOVE
     
     var style = StyleBoxFlat.new()
-    style.bg_color = Color(0.2, 0.4, 0.8, 0.8)  # Blue color
+    style.bg_color = Color(0.2, 0.4, 0.8, 0.8)
     style.corner_radius_top_left = GameTheme.STYLES.corner_radius
     style.corner_radius_top_right = GameTheme.STYLES.corner_radius
     style.corner_radius_bottom_left = GameTheme.STYLES.corner_radius
@@ -61,6 +61,9 @@ func create_selected_row_button(words: Array, selected_index: int) -> Button:
     
     # Add drag functionality
     button.gui_input.connect(func(event): _on_row_gui_input(event, button))
+
+    # Disable hover effect
+    button.add_theme_stylebox_override("hover", style)
     
     return button
 
