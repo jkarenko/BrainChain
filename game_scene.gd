@@ -115,30 +115,18 @@ func _update_preview_positions():
     if !dragged_row:
         return
         
-    _calculate_row_positions()
     var target_index = _get_closest_row_index()
     var current_index = dragged_row.get_index()
     
-    # Reset all positions first
+    _calculate_row_positions()
     for i in range($WordGrid.get_child_count()):
         var child = $WordGrid.get_child(i)
         if child == dragged_row or child is CenterContainer:
             continue
             
-        var tween = create_tween()
-        tween.set_ease(Tween.EASE_OUT)
-        tween.set_trans(Tween.TRANS_CUBIC)
-        tween.tween_property(child, "position:y", row_positions[i], 0.2)
-    
-    # Then apply preview shifts if target is different
-    if target_index != current_index:
-        for i in range($WordGrid.get_child_count()):
-            var child = $WordGrid.get_child(i)
-            if child == dragged_row or child is CenterContainer:
-                continue
-                
-            var target_pos = row_positions[i]
-            
+        var target_pos = row_positions[i]
+        
+        if target_index != current_index:
             if target_index > current_index:
                 if i > current_index and i <= target_index:
                     target_pos = row_positions[i - 1]
@@ -146,10 +134,11 @@ func _update_preview_positions():
                 if i >= target_index and i < current_index:
                     target_pos = row_positions[i + 1]
                     
-            var tween = create_tween()
-            tween.set_ease(Tween.EASE_OUT)
-            tween.set_trans(Tween.TRANS_CUBIC)
-            tween.tween_property(child, "position:y", target_pos, 0.2)
+        child.get_tree().create_tween().kill()
+        var tween = create_tween()
+        tween.set_ease(Tween.EASE_OUT)
+        tween.set_trans(Tween.TRANS_CUBIC)
+        tween.tween_property(child, "position:y", target_pos, 0.2)
 
 func _reset_row_positions():
     _calculate_row_positions()
