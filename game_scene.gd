@@ -119,29 +119,37 @@ func _update_preview_positions():
     var target_index = _get_closest_row_index()
     var current_index = dragged_row.get_index()
     
-    if target_index == -1 or target_index == current_index:
-        return
-        
+    # Reset all positions first
     for i in range($WordGrid.get_child_count()):
         var child = $WordGrid.get_child(i)
         if child == dragged_row or child is CenterContainer:
             continue
             
-        var target_pos = row_positions[i]
-        
-        # Adjust positions based on drag direction
-        if target_index > current_index:
-            if i > current_index and i <= target_index:
-                target_pos = row_positions[i - 1]
-        else:
-            if i >= target_index and i < current_index:
-                target_pos = row_positions[i + 1]
-                
-        # Create smooth tween animation
         var tween = create_tween()
         tween.set_ease(Tween.EASE_OUT)
         tween.set_trans(Tween.TRANS_CUBIC)
-        tween.tween_property(child, "position:y", target_pos, 0.2)
+        tween.tween_property(child, "position:y", row_positions[i], 0.2)
+    
+    # Then apply preview shifts if target is different
+    if target_index != current_index:
+        for i in range($WordGrid.get_child_count()):
+            var child = $WordGrid.get_child(i)
+            if child == dragged_row or child is CenterContainer:
+                continue
+                
+            var target_pos = row_positions[i]
+            
+            if target_index > current_index:
+                if i > current_index and i <= target_index:
+                    target_pos = row_positions[i - 1]
+            else:
+                if i >= target_index and i < current_index:
+                    target_pos = row_positions[i + 1]
+                    
+            var tween = create_tween()
+            tween.set_ease(Tween.EASE_OUT)
+            tween.set_trans(Tween.TRANS_CUBIC)
+            tween.tween_property(child, "position:y", target_pos, 0.2)
 
 func _reset_row_positions():
     _calculate_row_positions()
@@ -157,16 +165,15 @@ func _reset_row_positions():
 
 func _get_closest_row_index() -> int:
     var local_y = $WordGrid.get_local_mouse_position().y
-    var closest_index = -1
-    var min_distance = INF
+    var row_height = 100 # Button height
+    var spacing = $WordGrid.get_theme_constant("separation")
+    var total_height = row_height + spacing
     
-    for i in range(row_positions.size()):
-        var distance = abs(row_positions[i] - local_y)
-        if distance < min_distance:
-            min_distance = distance
-            closest_index = i
-            
-    return closest_index
+    # Calculate the row index based on position relative to row centers
+    var index = floor(local_y / total_height)
+    
+    # Clamp to valid range
+    return clampi(index, 0, row_positions.size() - 1)
 
 func on_word_selected(button: Button, _position: int, words: Array):
     var parent_row = button.get_parent()
