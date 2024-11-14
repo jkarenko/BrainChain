@@ -8,6 +8,7 @@ var continue_button: Button
 var can_drag = false
 var dragged_row = null
 var original_pos = Vector2.ZERO
+var row_positions = []
 
 func _ready():
     var background = ColorRect.new()
@@ -16,8 +17,7 @@ func _ready():
     add_child(background)
     move_child(background, 0)
     
-    # Configure WordGrid
-    $WordGrid.add_theme_constant_override("separation", 20)  # Add vertical separation between rows
+    $WordGrid.add_theme_constant_override("separation", 20)
     
     available_words = preload("res://word_data.gd").get_words_from_categories(3)
     available_words.shuffle()
@@ -43,10 +43,8 @@ func create_button_style(is_hover: bool = false) -> StyleBoxFlat:
 
 func create_selected_row_button(words: Array, selected_index: int) -> Button:
     var button = Button.new()
-    
-    # Only use the selected word
     button.text = words[selected_index]
-    button.custom_minimum_size = Vector2(600, 100)  # Same width as three buttons + spacing
+    button.custom_minimum_size = Vector2(600, 100)
     button.mouse_filter = Control.MOUSE_FILTER_STOP
     button.mouse_default_cursor_shape = Control.CURSOR_MOVE
     
@@ -62,13 +60,20 @@ func create_selected_row_button(words: Array, selected_index: int) -> Button:
     button.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
     button.alignment = HORIZONTAL_ALIGNMENT_CENTER
     
-    # Add drag functionality
     button.gui_input.connect(func(event): _on_row_gui_input(event, button))
-
-    # Disable hover effect
     button.add_theme_stylebox_override("hover", style)
     
     return button
+
+func _calculate_row_positions():
+    row_positions.clear()
+    var current_y = 0
+    var row_height = 100  # Button height
+    var spacing = $WordGrid.get_theme_constant("separation")
+    
+    for i in range($WordGrid.get_child_count()):
+        row_positions.append(current_y)
+        current_y += row_height + spacing
 
 func _on_row_gui_input(event: InputEvent, button: Button):
     if !can_drag:
@@ -78,80 +83,85 @@ func _on_row_gui_input(event: InputEvent, button: Button):
         if event.button_index == MOUSE_BUTTON_LEFT:
             if event.pressed:
                 dragged_row = button
-                original_pos = button.global_position
+                original_pos = button.position
                 button.modulate.a = 0.5
-                # Move dragged button to top of others
                 button.z_index = 1
+                _calculate_row_positions()
             else:
                 if dragged_row:
                     dragged_row.modulate.a = 1.0
                     dragged_row.z_index = 0
-                    var drop_index = _get_closest_row_index(get_global_mouse_position())
-                    if drop_index != -1:
+                    
+                    var drop_index = _get_closest_row_index()
+                    if drop_index != -1 and drop_index != dragged_row.get_index():
                         var current_index = dragged_row.get_index()
-                        if current_index != drop_index:
-                            $WordGrid.move_child(dragged_row, drop_index)
-                            var word = selected_words[current_index]
-                            selected_words.remove_at(current_index)
-                            selected_words.insert(drop_index, word)
-                    # Reset all positions
+                        $WordGrid.move_child(dragged_row, drop_index)
+                        
+                        var word = selected_words[current_index]
+                        selected_words.remove_at(current_index)
+                        selected_words.insert(drop_index, word)
+                    
+                    _calculate_row_positions()
                     _reset_row_positions()
                 dragged_row = null
                 
     elif event is InputEventMouseMotion:
         if dragged_row:
-            dragged_row.global_position = get_global_mouse_position() - dragged_row.size / 2
+            var delta = event.position + button.position
+            dragged_row.position.y = delta.y - dragged_row.size.y / 2
             _update_preview_positions()
 
 func _update_preview_positions():
-    var target_index = _get_closest_row_index(get_global_mouse_position())
-    if target_index == -1:
+    if !dragged_row:
         return
         
+    _calculate_row_positions()
+    var target_index = _get_closest_row_index()
     var current_index = dragged_row.get_index()
-    var row_height = dragged_row.size.y
-    var row_spacing = $WordGrid.get_theme_constant("separation")
-    var shift_distance = row_height + row_spacing
     
+    if target_index == -1 or target_index == current_index:
+        return
+        
     for i in range($WordGrid.get_child_count()):
         var child = $WordGrid.get_child(i)
         if child == dragged_row or child is CenterContainer:
             continue
             
-        var base_position = i * shift_distance
-        var tween = create_tween()
+        var target_pos = row_positions[i]
         
+        # Adjust positions based on drag direction
         if target_index > current_index:
             if i > current_index and i <= target_index:
-                tween.tween_property(child, "position:y", base_position - shift_distance, 0.2)
-            else:
-                tween.tween_property(child, "position:y", base_position, 0.2)
+                target_pos = row_positions[i - 1]
         else:
             if i >= target_index and i < current_index:
-                tween.tween_property(child, "position:y", base_position + shift_distance, 0.2)
-            else:
-                tween.tween_property(child, "position:y", base_position, 0.2)
+                target_pos = row_positions[i + 1]
+                
+        # Create smooth tween animation
+        var tween = create_tween()
+        tween.set_ease(Tween.EASE_OUT)
+        tween.set_trans(Tween.TRANS_CUBIC)
+        tween.tween_property(child, "position:y", target_pos, 0.2)
 
 func _reset_row_positions():
-    var row_height = dragged_row.size.y
-    var row_spacing = $WordGrid.get_theme_constant("separation")
-    var shift_distance = row_height + row_spacing
-    
+    _calculate_row_positions()
     for i in range($WordGrid.get_child_count()):
         var child = $WordGrid.get_child(i)
         if child is CenterContainer:
             continue
-        var base_position = i * shift_distance
+            
         var tween = create_tween()
-        tween.tween_property(child, "position:y", base_position, 0.2)
+        tween.set_ease(Tween.EASE_OUT)
+        tween.set_trans(Tween.TRANS_CUBIC)
+        tween.tween_property(child, "position:y", row_positions[i], 0.2)
 
-func _get_closest_row_index(mouse_pos: Vector2) -> int:
+func _get_closest_row_index() -> int:
+    var local_y = $WordGrid.get_local_mouse_position().y
     var closest_index = -1
     var min_distance = INF
     
-    for i in range($WordGrid.get_child_count()):
-        var child = $WordGrid.get_child(i)
-        var distance = abs(child.global_position.y - mouse_pos.y)
+    for i in range(row_positions.size()):
+        var distance = abs(row_positions[i] - local_y)
         if distance < min_distance:
             min_distance = distance
             closest_index = i
