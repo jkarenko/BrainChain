@@ -76,7 +76,8 @@ func _calculate_row_positions():
         current_y += row_height + spacing
 
 func _on_row_gui_input(event: InputEvent, button: Button):
-    if !can_drag:
+    # Only allow dragging selected word buttons (blue ones)
+    if !can_drag or button.get_theme_stylebox("normal").bg_color != Color(0.2, 0.4, 0.8, 0.8):
         return
         
     if event is InputEventMouseButton:
@@ -154,15 +155,22 @@ func _reset_row_positions():
 
 func _get_closest_row_index() -> int:
     var local_y = $WordGrid.get_local_mouse_position().y
-    var row_height = 100 # Button height
+    var continue_button_index = -1
+    
+    # Find continue button index
+    for i in range($WordGrid.get_child_count()):
+        if $WordGrid.get_child(i) is CenterContainer:
+            continue_button_index = i
+            break
+    
+    # Calculate target index normally
+    var row_height = 100
     var spacing = $WordGrid.get_theme_constant("separation")
     var total_height = row_height + spacing
-    
-    # Calculate the row index based on position relative to row centers
     var index = floor(local_y / total_height)
     
-    # Clamp to valid range
-    return clampi(index, 0, row_positions.size() - 1)
+    # Clamp to valid range before continue button
+    return clampi(index, 0, continue_button_index - 1 if continue_button_index != -1 else row_positions.size() - 1)
 
 func on_word_selected(button: Button, _position: int, words: Array):
     var parent_row = button.get_parent()
