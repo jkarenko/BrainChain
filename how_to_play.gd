@@ -1,11 +1,10 @@
 extends Control
 
 func _ready():
-    style_button($VBoxContainer/StartButton)
-    style_button($VBoxContainer/HowToPlayButton)
-    $VBoxContainer/Title.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
-    $VBoxContainer/StartButton.pressed.connect(on_start_pressed)
-    $VBoxContainer/HowToPlayButton.pressed.connect(on_how_to_play_pressed)
+    style_button($VBoxContainer/BackButton)
+    
+    for label in $VBoxContainer/Instructions.get_children():
+        label.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
 
 func style_button(button: Button):
     var normal_style = StyleBoxFlat.new()
@@ -23,8 +22,5 @@ func style_button(button: Button):
     button.add_theme_stylebox_override("pressed", hover_style)
     button.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
 
-func on_start_pressed():
-    get_parent().change_scene_to("game_scene")
-
-func on_how_to_play_pressed():
-    get_parent().change_scene_to("how_to_play")
+func _on_back_pressed():
+    get_parent().change_scene_to("main_menu")

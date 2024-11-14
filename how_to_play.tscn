@@ -1,0 +1,88 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckp8cp80o6njq"]
+
+[ext_resource type="Script" path="res://how_to_play.gd" id="1_howto"]
+
+[node name="HowToPlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_howto")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.0705882, 0.0745098, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "How to Play"
+horizontal_alignment = 1
+
+[node name="Instructions" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Step1" type="Label" parent="VBoxContainer/Instructions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1. Choose 5 words from the options presented"
+autowrap_mode = 3
+
+[node name="Step2" type="Label" parent="VBoxContainer/Instructions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2. Each word should relate to the previous one"
+autowrap_mode = 3
+
+[node name="Step3" type="Label" parent="VBoxContainer/Instructions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "3. After selecting all words, you can drag to reorder them"
+autowrap_mode = 3
+
+[node name="Step4" type="Label" parent="VBoxContainer/Instructions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "4. Score points for related words:
+• Direct connections score higher
+• Indirect connections through common words
+• Bonus points for chains of related words"
+autowrap_mode = 3
+
+[node name="Step5" type="Label" parent="VBoxContainer/Instructions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "5. Click on words to see their connections"
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_pressed"]
