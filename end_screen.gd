@@ -77,12 +77,10 @@ func calculate_word_scores() -> Dictionary:
 
 func setup_word_display():
     var words_container = $VBoxContainer/WordsContainer
-    
-    # Calculate individual word scores
     var word_scores = calculate_word_scores()
-    
-    # Add selected words with cascade animation
     var word_nodes = []
+    
+    # First pass: Add all words and their scores
     for i in range(selected_words.size()):
         var word_row = HBoxContainer.new()
         word_row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -121,12 +119,53 @@ func setup_word_display():
         word_nodes.append(word_row)
         
         var tween = create_tween()
+        
+        # Check for common associations with previous words
+        if i > 0:
+            var word1 = selected_words[i-1]
+            var word2 = selected_words[i]
+            var connecting_words = find_connecting_words(word1, word2)
+
+            # If there's an indirect connection via a common word
+            if connecting_words.size() > 0 and connecting_words[0] != "Direct":
+                var connector_row = HBoxContainer.new()
+                connector_row.alignment = BoxContainer.ALIGNMENT_CENTER
+                connector_row.modulate.a = 0
+                
+                var connector_label = Button.new()
+                connector_label.text = connecting_words[0]
+                connector_label.custom_minimum_size = Vector2(150, 35)
+                
+                var connector_style = StyleBoxFlat.new()
+                connector_style.bg_color = Color(0.3, 0.3, 0.3, 0.8)  # Darker grey
+                connector_style.corner_radius_top_left = GameTheme.STYLES.corner_radius
+                connector_style.corner_radius_top_right = GameTheme.STYLES.corner_radius
+                connector_style.corner_radius_bottom_left = GameTheme.STYLES.corner_radius
+                connector_style.corner_radius_bottom_right = GameTheme.STYLES.corner_radius
+                
+                connector_label.add_theme_stylebox_override("normal", connector_style)
+                connector_label.add_theme_font_size_override("font_size", 18)
+                connector_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+                
+                connector_row.add_child(connector_label)
+                
+                # Insert the connector row before the current word row
+                var current_index = word_row.get_index()
+                words_container.move_child(word_row, current_index)
+                words_container.add_child(connector_row)
+                words_container.move_child(connector_row, current_index)
+                
+                # Animate connector
+                tween.tween_property(connector_row, "modulate:a", 1, 0.3).set_delay(i * 0.15)
+                tween.parallel().tween_property(connector_row, "position:x", 0, 0.3).from(50)
+        
         tween.tween_property(word_row, "modulate:a", 1, 0.3).set_delay(i * 0.15)
         tween.parallel().tween_property(word_row, "position:x", 0, 0.3).from(50)
     
     # Highlight connections after words appear
     await get_tree().create_timer(selected_words.size() * 0.15 + 0.3).timeout
     highlight_connections(word_nodes)
+
 
 
 func highlight_connections(word_nodes: Array):
