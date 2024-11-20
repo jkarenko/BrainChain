@@ -13,3 +13,22 @@ BrainChain is a word morpheme puzzle game where players identify common prefixes
 - "wheel", "over", "trap" → "fly" (flywheel, flyover, flytrap)
 - "walk", "word", "stitch" → "cross" (crosswalk, crossword, crossstitch)
 - "side", "load", "time" → "down" (downside, download, downtime)
+
+## How to Run
+
+### Prerequisites
+- Godot 4.x
+
+#### Install Godot
+- Download and install Godot from the [official website](https://godotengine.org/download)
+
+### Clone the repository
+```
+git clone https://github.com/jkarenko/BrainChain.git
+```
+
+### Open the project in Godot
+```
+cd BrainChain
+godot .
+```
