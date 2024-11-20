@@ -27,8 +27,15 @@ BrainChain is a word morpheme puzzle game where players identify common prefixes
 git clone https://github.com/jkarenko/BrainChain.git
 ```
 
-### Open the project in Godot
+### Add your OpenAI API key
+- Create an account and get your API key from [OpenAI](https://platform.openai.com/api-keys)
+- Add your API key
 ```
 cd BrainChain
+echo "YOUR_API_KEY" > openai_api_key.txt
+```
+
+### Open the project in Godot
+```
 godot .
 ```
