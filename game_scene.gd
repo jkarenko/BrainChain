@@ -1,5 +1,8 @@
 extends Control
 
+signal return_to_main_menu
+signal new_game_requested
+
 var available_words = []
 var selected_count = 0
 var guessed_words = []
@@ -9,6 +12,13 @@ var current_prefix = ""
 var current_connecting_word = ""
 
 func _ready():
+	# Add signal connections at the start of _ready
+	if not is_connected("return_to_main_menu", Callable(get_parent(), "change_scene_to").bind("main_menu")):
+		connect("return_to_main_menu", Callable(get_parent(), "change_scene_to").bind("main_menu"))
+	
+	if not is_connected("new_game_requested", Callable(get_parent(), "change_scene_to").bind("game")):
+		connect("new_game_requested", Callable(get_parent(), "change_scene_to").bind("game"))
+	
 	var background = ColorRect.new()
 	background.color = GameTheme.COLORS.background
 	background.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -27,6 +37,71 @@ func _ready():
 		return
 		
 	setup_first_row()
+
+# Rename function to match its purpose
+func show_end_game_buttons():
+	var button_container = HBoxContainer.new()
+	button_container.set_alignment(HBoxContainer.ALIGNMENT_CENTER)
+	button_container.add_theme_constant_override("separation", 20)
+	
+	# Create New Game button
+	var new_game_button = Button.new()
+	new_game_button.text = "New Game"
+	new_game_button.custom_minimum_size = Vector2(200, 60)
+	
+	var new_game_style = StyleBoxFlat.new()
+	new_game_style.bg_color = Color(0.2, 0.8, 0.2, 0.8)  # Green color
+	new_game_style.corner_radius_top_left = GameTheme.STYLES.corner_radius
+	new_game_style.corner_radius_top_right = GameTheme.STYLES.corner_radius
+	new_game_style.corner_radius_bottom_left = GameTheme.STYLES.corner_radius
+	new_game_style.corner_radius_bottom_right = GameTheme.STYLES.corner_radius
+	
+	new_game_button.add_theme_stylebox_override("normal", new_game_style)
+	new_game_button.add_theme_font_size_override("font_size", 24)
+	new_game_button.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
+	new_game_button.pressed.connect(_on_new_game_pressed)
+	
+	# Create Main Menu button
+	var main_menu_button = Button.new()
+	main_menu_button.text = "Main Menu"
+	main_menu_button.custom_minimum_size = Vector2(200, 60)
+	
+	var main_menu_style = StyleBoxFlat.new()
+	main_menu_style.bg_color = Color(0, 0.4, 0.8, 0.8)  # Blue color
+	main_menu_style.corner_radius_top_left = GameTheme.STYLES.corner_radius
+	main_menu_style.corner_radius_top_right = GameTheme.STYLES.corner_radius
+	main_menu_style.corner_radius_bottom_left = GameTheme.STYLES.corner_radius
+	main_menu_style.corner_radius_bottom_right = GameTheme.STYLES.corner_radius
+	
+	main_menu_button.add_theme_stylebox_override("normal", main_menu_style)
+	main_menu_button.add_theme_font_size_override("font_size", 24)
+	main_menu_button.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
+	main_menu_button.pressed.connect(_on_main_menu_pressed)
+	
+	# Add buttons to container
+	button_container.add_child(new_game_button)
+	button_container.add_child(main_menu_button)
+	
+	# Create wrapper for vertical spacing
+	var container = CenterContainer.new()
+	container.custom_minimum_size = Vector2(0, 80)
+	container.add_child(button_container)
+	$WordGrid.add_child(container)
+
+func _create_stylebox(color: Color) -> StyleBoxFlat:
+	var style = StyleBoxFlat.new()
+	style.bg_color = color
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	return style
+
+func _on_new_game_pressed():
+	emit_signal("new_game_requested")
+
+func _on_main_menu_pressed():
+	emit_signal("return_to_main_menu")
 
 func get_next_row_words() -> Array:
 	if WordData.WORD_DATA.is_empty() or not WordData.WORD_DATA.has("ROWS"):
@@ -120,6 +195,7 @@ func create_word_row(words: Array):
 func check_guess(guess: String, container: Node, words: Array):
 	var input = container.get_node("InputContainer/Input")
 	var word_row = container.get_node("WordRow")
+	var input_container = container.get_node("InputContainer")
 	
 	# Don't process input if we're already at max selections
 	if selected_count >= MAX_SELECTIONS:
@@ -128,9 +204,16 @@ func check_guess(guess: String, container: Node, words: Array):
 	# Disable input immediately after submission
 	input.editable = false
 	
+	# Create result label to replace input
+	var result_label = Label.new()
+	result_label.text = current_connecting_word
+	result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	result_label.add_theme_font_size_override("font_size", 20)
+	
 	if guess.to_lower() == current_connecting_word.to_lower():
 		# Correct guess
 		guessed_words.append(guess)
+		result_label.add_theme_color_override("font_color", Color(0.2, 0.8, 0.2)) # Green
 		
 		# Turn the row green
 		for box in word_row.get_children():
@@ -139,11 +222,14 @@ func check_guess(guess: String, container: Node, words: Array):
 		
 		selected_count += 1
 		if selected_count >= MAX_SELECTIONS:
-			show_main_menu_button()
+			show_end_game_buttons()
 		else:
 			create_word_row(get_next_row_words())
 	else:
-		# Wrong guess - turn words red
+		# Wrong guess
+		result_label.add_theme_color_override("font_color", Color(0.8, 0.2, 0.2)) # Red
+		
+		# Turn words red
 		for box in word_row.get_children():
 			var style = box.get_theme_stylebox("panel")
 			style.bg_color = Color(0.8, 0.2, 0.2, 0.8)  # Red color
@@ -153,34 +239,13 @@ func check_guess(guess: String, container: Node, words: Array):
 		
 		selected_count += 1
 		if selected_count >= MAX_SELECTIONS:
-			show_main_menu_button()
+			show_end_game_buttons()
 		else:
 			create_word_row(get_next_row_words())
-
-func show_main_menu_button():
-	var main_menu_button = Button.new()
-	main_menu_button.text = "Main Menu"
-	main_menu_button.custom_minimum_size = Vector2(200, 60)
 	
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.2, 0.8, 0.2, 0.8)  # Green color
-	style.corner_radius_top_left = GameTheme.STYLES.corner_radius
-	style.corner_radius_top_right = GameTheme.STYLES.corner_radius
-	style.corner_radius_bottom_left = GameTheme.STYLES.corner_radius
-	style.corner_radius_bottom_right = GameTheme.STYLES.corner_radius
-	
-	main_menu_button.add_theme_stylebox_override("normal", style)
-	main_menu_button.add_theme_font_size_override("font_size", 24)
-	main_menu_button.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
-	main_menu_button.pressed.connect(return_to_main_menu)
-	
-	var container = CenterContainer.new()
-	container.custom_minimum_size = Vector2(0, 80)
-	container.add_child(main_menu_button)
-	$WordGrid.add_child(container)
-
-func return_to_main_menu():
-	get_parent().change_scene_to("main_menu")
+	# Replace input with result label
+	input.queue_free()
+	input_container.add_child(result_label)
 
 func setup_first_row():
 	create_word_row(get_next_row_words())
