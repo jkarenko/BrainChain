@@ -39,10 +39,11 @@ func _on_words_saved():
     await get_tree().process_frame
     add_child(load("res://word_data.gd").new())
     
-    # Initialize game with first row
+    # Initialize game with words from all rows
     available_words = []
-    for category in preload("res://word_data.gd").WORD_CATEGORIES.values():
-        available_words.append_array(category)
+    var word_data_script = preload("res://word_data.gd")
+    for row_key in word_data_script.WORD_CATEGORIES.keys():
+        available_words.append_array(word_data_script.WORD_CATEGORIES[row_key])
     available_words.shuffle()
     
     $LoadingPanel.hide()
@@ -64,9 +65,11 @@ func get_random_words(count: int) -> Array:
     var words = []
     if available_words.size() < count:
         available_words = []
-        for category in preload("res://word_data.gd").WORD_CATEGORIES.values():
-            available_words.append_array(category)
+        var word_data_script = preload("res://word_data.gd")
+        for row_key in word_data_script.WORD_CATEGORIES.keys():
+            available_words.append_array(word_data_script.WORD_CATEGORIES[row_key])
         available_words.shuffle()
+    
     for i in range(count):
         words.append(available_words.pop_front())
     return words
