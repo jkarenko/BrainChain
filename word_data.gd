@@ -15,45 +15,25 @@ func _init():
             WORD_RELATIONSHIPS = data["WORD_RELATIONSHIPS"]
         file.close()
 
-static func get_relationship_score(word1: String, word2: String) -> Dictionary:
-    var instance = Engine.get_main_loop().get_root().get_node_or_null("/root/WordData")
-    if instance == null:
-        instance = load("res://word_data.gd").new()
-    
+static func find_connecting_words(word1: String, word2: String) -> Array:
     # Search through relationships to find connections
     for row_data in WORD_RELATIONSHIPS.values():
-        for word_data in row_data:
-            if word_data["word"] == word1 and word2 in word_data["related_to"]:
-                return {
-                    "score": 30,  # Default score for direct relationships
-                    "type": word_data["relationship"]
-                }
-            elif word_data["word"] == word2 and word1 in word_data["related_to"]:
-                return {
-                    "score": 30,  # Default score for direct relationships
-                    "type": word_data["relationship"]
-                }
+        for word_entry in row_data:
+            if word_entry["word"] == word1:
+                # Check if word2 is in any of the connecting_words entries
+                for connection in word_entry["connecting_words"]:
+                    if connection["related_word"] == word2:
+                        return [connection["connecting_word"], connection["explanation"]]
+            elif word_entry["word"] == word2:
+                # Check the reverse direction
+                for connection in word_entry["connecting_words"]:
+                    if connection["related_word"] == word1:
+                        return [connection["connecting_word"], connection["explanation"]]
     
-    return {
-        "score": 0,
-        "type": ""
-    }
+    return []
 
 static func get_all_words() -> Array:
     var all_words = []
     for row_key in WORD_CATEGORIES.keys():
         all_words.append_array(WORD_CATEGORIES[row_key])
     return all_words
-
-static func get_words_from_categories(num_categories: int) -> Array:
-    var categories = WORD_CATEGORIES.keys()
-    categories.shuffle()
-    
-    var selected_words = []
-    for i in range(min(num_categories, categories.size())):
-        selected_words.append_array(WORD_CATEGORIES[categories[i]])
-    
-    return selected_words
-
-static func are_words_related(word1: String, word2: String) -> bool:
-    return get_relationship_score(word1, word2).score > 0

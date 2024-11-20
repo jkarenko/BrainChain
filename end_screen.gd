@@ -17,13 +17,14 @@ func calculate_score():
         var word1 = selected_words[i]
         var word2 = selected_words[i + 1]
         
-        var relationship = WordData.get_relationship_score(word1, word2)
-        if relationship.score > 0:
-            score += relationship.score
+        var connecting_words = find_connecting_words(word1, word2)
+        if connecting_words.size() > 0:
+            # Award points for each valid connection
+            score += 50  # Base score for each connection
             connections.append({
-                "type": relationship.type,
                 "from": i,
-                "to": i + 1
+                "to": i + 1,
+                "connecting_word": connecting_words[0]
             })
     
     # Chain bonus: consecutive relationships
@@ -39,7 +40,8 @@ func find_longest_chain() -> int:
         var word1 = selected_words[i]
         var word2 = selected_words[i + 1]
         
-        if WordData.are_words_related(word1, word2):
+        var connecting_words = find_connecting_words(word1, word2)
+        if connecting_words.size() > 0:
             current += 1
             longest = max(longest, current)
         else:
@@ -67,11 +69,12 @@ func calculate_word_scores() -> Dictionary:
         var word1 = selected_words[i]
         var word2 = selected_words[i + 1]
         
-        var relationship = WordData.get_relationship_score(word1, word2)
-        if relationship.score > 0:
-            # Split the score between the two words
-            word_scores[word1] += relationship.score / 2
-            word_scores[word2] += relationship.score / 2
+        var connecting_words = find_connecting_words(word1, word2)
+        if connecting_words.size() > 0:
+            # Split the base score between the two words
+            var connection_score = 50  # Base score for each connection
+            word_scores[word1] += connection_score / 2
+            word_scores[word2] += connection_score / 2
     
     return word_scores
 
@@ -173,13 +176,9 @@ func highlight_connections(word_nodes: Array):
         var word1 = selected_words[i]
         var word2 = selected_words[i + 1]
         
-        var relationship = WordData.get_relationship_score(word1, word2)
-        if relationship.score > 0:
+        var connecting_words = find_connecting_words(word1, word2)
+        if connecting_words.size() > 0:
             var color = GameTheme.COLORS.selected_word  # default color
-            match relationship.type:
-                "compound": color = GameTheme.COLORS.primary
-                "strong": color = GameTheme.COLORS.secondary
-            
             var tween = create_tween()
             tween.tween_property(word_nodes[i], "modulate", Color(color, 1.2), 0.3)
             tween.parallel().tween_property(word_nodes[i + 1], "modulate", Color(color, 1.2), 0.3)
@@ -249,44 +248,36 @@ func show_associations(clicked_word: String):
         # Check previous word
         if word_idx > 0:
             var prev_word = selected_words[word_idx - 1]
-            var connecting_words = find_connecting_words(prev_word, clicked_word)
-            if connecting_words.size() > 0:
+            var connection = WordData.find_connecting_words(prev_word, clicked_word)
+            if connection.size() > 0:
                 var rel_label = Label.new()
-                if connecting_words[0] == "Direct":
-                    rel_label.text = "• '%s' is directly connected to '%s'" % [
-                        prev_word,
-                        clicked_word
-                    ]
-                else:
-                    rel_label.text = "• '%s' is connected to '%s' via '%s'" % [
-                        prev_word,
-                        clicked_word,
-                        connecting_words[0]
-                    ]
+                rel_label.text = "• '%s' is connected to '%s' via '%s'\n  %s" % [
+                    prev_word,
+                    clicked_word,
+                    connection[0],  # connecting word
+                    connection[1]   # explanation
+                ]
                 rel_label.add_theme_font_size_override("font_size", 18)
                 rel_label.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
+                rel_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
                 vbox.add_child(rel_label)
                 connections_found = true
         
         # Check next word
         if word_idx < selected_words.size() - 1:
             var next_word = selected_words[word_idx + 1]
-            var connecting_words = find_connecting_words(clicked_word, next_word)
-            if connecting_words.size() > 0:
+            var connection = WordData.find_connecting_words(clicked_word, next_word)
+            if connection.size() > 0:
                 var rel_label = Label.new()
-                if connecting_words[0] == "Direct":
-                    rel_label.text = "• '%s' is directly connected to '%s'" % [
-                        clicked_word,
-                        next_word
-                    ]
-                else:
-                    rel_label.text = "• '%s' is connected to '%s' via '%s'" % [
-                        clicked_word,
-                        next_word,
-                        connecting_words[0]
-                    ]
+                rel_label.text = "• '%s' is connected to '%s' via '%s'\n  %s" % [
+                    clicked_word,
+                    next_word,
+                    connection[0],  # connecting word
+                    connection[1]   # explanation
+                ]
                 rel_label.add_theme_font_size_override("font_size", 18)
                 rel_label.add_theme_color_override("font_color", GameTheme.COLORS.text_light)
+                rel_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
                 vbox.add_child(rel_label)
                 connections_found = true
 
