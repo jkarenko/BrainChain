@@ -12,12 +12,18 @@ var current_prefix = ""
 var current_connecting_word = ""
 
 func _ready():
+	# Add loading panel
+	var loading_panel = preload("res://loading_panel.tscn").instantiate()
+	loading_panel.name = "LoadingPanel"
+	add_child(loading_panel)
+	loading_panel.hide()
+	
 	# Add signal connections at the start of _ready
 	if not is_connected("return_to_main_menu", Callable(get_parent(), "change_scene_to").bind("main_menu")):
 		connect("return_to_main_menu", Callable(get_parent(), "change_scene_to").bind("main_menu"))
 	
-	if not is_connected("new_game_requested", Callable(get_parent(), "change_scene_to").bind("game")):
-		connect("new_game_requested", Callable(get_parent(), "change_scene_to").bind("game"))
+	if not is_connected("new_game_requested", Callable(get_parent(), "change_scene_to").bind("game_scene")):
+		connect("new_game_requested", Callable(get_parent(), "change_scene_to").bind("game_scene"))
 	
 	var background = ColorRect.new()
 	background.color = GameTheme.COLORS.background
@@ -98,6 +104,26 @@ func _create_stylebox(color: Color) -> StyleBoxFlat:
 	return style
 
 func _on_new_game_pressed():
+	$LoadingPanel.show()
+	var word_generator = preload("res://word_generator.gd").new()
+	add_child(word_generator)
+	word_generator.generation_failed.connect(_on_generation_failed)
+	word_generator.save_failed.connect(_on_save_failed)
+	word_generator.words_saved.connect(_on_words_saved)
+	word_generator.generate_daily_words()
+
+func _on_generation_failed(error: String):
+	push_error("Failed to generate words: " + error)
+	$LoadingPanel.hide()
+	# TODO: Show error dialog
+
+func _on_save_failed(error: String):
+	push_error("Failed to save words: " + error)
+	$LoadingPanel.hide()
+	# TODO: Show error dialog
+
+func _on_words_saved():
+	$LoadingPanel.hide()
 	emit_signal("new_game_requested")
 
 func _on_main_menu_pressed():
@@ -173,7 +199,6 @@ func create_word_row(words: Array):
 	
 	# Add word boxes
 	for word in words:
-		word = word.replace("-", "")
 		var box = create_word_box(word)
 		row.add_child(box)
 	
@@ -184,7 +209,7 @@ func create_word_row(words: Array):
 	
 	var input = LineEdit.new()
 	input.name = "Input"
-	input.placeholder_text = "Type the common prefix..."
+	input.placeholder_text = "Type the common morpheme..."
 	input.custom_minimum_size = Vector2(300, 50)
 	input.add_theme_font_size_override("font_size", 20)
 	input.text_submitted.connect(func(text): check_guess(text, container, words))
