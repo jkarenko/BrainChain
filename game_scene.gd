@@ -173,6 +173,7 @@ func create_word_row(words: Array):
 	
 	# Add word boxes
 	for word in words:
+		word = word.replace("-", "")
 		var box = create_word_box(word)
 		row.add_child(box)
 	
