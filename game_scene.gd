@@ -1,5 +1,6 @@
 extends Control
 
+var word_generator: Node
 var available_words = []
 var selected_count = 0
 var selected_words = []
@@ -19,14 +20,52 @@ func _ready():
     
     $WordGrid.add_theme_constant_override("separation", 20)
     
-    available_words = preload("res://word_data.gd").get_words_from_categories(3)
+    # Initialize word generator and loading screen
+    word_generator = preload("res://word_generator.gd").new()
+    add_child(word_generator)
+    word_generator.generation_failed.connect(_on_generation_failed)
+    word_generator.save_failed.connect(_on_save_failed)
+    word_generator.words_saved.connect(_on_words_saved)
+    
+    # Start generating new words
+    $LoadingPanel.show()
+    word_generator.generate_daily_words()
+
+func _on_words_saved():
+    # Force reload of word data
+    var word_data = get_node_or_null("/root/WordData")
+    if word_data:
+        word_data.queue_free()
+    await get_tree().process_frame
+    add_child(load("res://word_data.gd").new())
+    
+    # Initialize game with first row
+    available_words = []
+    for category in preload("res://word_data.gd").WORD_CATEGORIES.values():
+        available_words.append_array(category)
     available_words.shuffle()
+    
+    $LoadingPanel.hide()
     setup_first_row()
+
+func _on_generation_failed(error: String):
+    push_error("Failed to generate words: " + error)
+    $LoadingPanel.hide()
+    # TODO: Show error dialog or return to menu
+    get_tree().change_scene_to_file("res://main_menu.tscn")
+
+func _on_save_failed(error: String):
+    push_error("Failed to save words: " + error)
+    $LoadingPanel.hide()
+    # TODO: Show error dialog or return to menu
+    get_tree().change_scene_to_file("res://main_menu.tscn")
 
 func get_random_words(count: int) -> Array:
     var words = []
     if available_words.size() < count:
-        available_words = preload("res://word_data.gd").get_words_from_categories(3)
+        available_words = []
+        for category in preload("res://word_data.gd").WORD_CATEGORIES.values():
+            available_words.append_array(category)
         available_words.shuffle()
     for i in range(count):
         words.append(available_words.pop_front())

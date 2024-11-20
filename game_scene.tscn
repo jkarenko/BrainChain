@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkwim8rav2ux"]
+[gd_scene load_steps=3 format=3 uid="uid://dkwim8rav2ux"]
 
 [ext_resource type="Script" path="res://game_scene.gd" id="1_61gnl"]
+[ext_resource type="PackedScene" uid="uid://b8p4q7c5h6j8v" path="res://loading_panel.tscn" id="2_loading"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -23,3 +24,6 @@ offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
+
+[node name="LoadingPanel" parent="." instance=ExtResource("2_loading")]
+layout_mode = 1

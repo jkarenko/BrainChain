@@ -6,7 +6,7 @@ static var _processed_relationships = {}
 
 func _init():
     # Load the JSON file
-    var file = FileAccess.open("res://path/to/word_data.json", FileAccess.READ)
+    var file = FileAccess.open("res://word_data.json", FileAccess.READ)
     if file:
         var json = JSON.new()
         var error = json.parse(file.get_as_text())

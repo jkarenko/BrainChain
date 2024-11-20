@@ -1,0 +1,191 @@
+{
+  "WORD_CATEGORIES": {
+    "row1": [
+      "light",
+      "tree",
+      "water"
+    ],
+    "row2": [
+      "house",
+      "wind",
+      "cat"
+    ],
+    "row3": [
+      "fire",
+      "bird",
+      "phone"
+    ],
+    "row4": [
+      "dog",
+      "bed",
+      "earth"
+    ],
+    "row5": [
+      "moon",
+      "river",
+      "road"
+    ]
+  },
+  "WORD_RELATIONSHIPS": {
+    "row1": [
+      {
+        "related_to": [
+          "house",
+          "fire",
+          "dog",
+          "moon"
+        ],
+        "relationship": "Candle",
+        "word": "light"
+      },
+      {
+        "related_to": [
+          "wind",
+          "bird",
+          "bed",
+          "river"
+        ],
+        "relationship": "Nest",
+        "word": "tree"
+      },
+      {
+        "related_to": [
+          "cat",
+          "phone",
+          "earth",
+          "road"
+        ],
+        "relationship": "Stream",
+        "word": "water"
+      }
+    ],
+    "row2": [
+      {
+        "related_to": [
+          "light",
+          "fire",
+          "dog",
+          "moon"
+        ],
+        "relationship": "Candle",
+        "word": "house"
+      },
+      {
+        "related_to": [
+          "tree",
+          "bird",
+          "bed",
+          "river"
+        ],
+        "relationship": "Nest",
+        "word": "wind"
+      },
+      {
+        "related_to": [
+          "water",
+          "phone",
+          "earth",
+          "road"
+        ],
+        "relationship": "Stream",
+        "word": "cat"
+      }
+    ],
+    "row3": [
+      {
+        "related_to": [
+          "light",
+          "house",
+          "dog",
+          "moon"
+        ],
+        "relationship": "Candle",
+        "word": "fire"
+      },
+      {
+        "related_to": [
+          "tree",
+          "wind",
+          "bed",
+          "river"
+        ],
+        "relationship": "Nest",
+        "word": "bird"
+      },
+      {
+        "related_to": [
+          "water",
+          "cat",
+          "earth",
+          "road"
+        ],
+        "relationship": "Stream",
+        "word": "phone"
+      }
+    ],
+    "row4": [
+      {
+        "related_to": [
+          "light",
+          "house",
+          "fire",
+          "moon"
+        ],
+        "relationship": "Candle",
+        "word": "dog"
+      },
+      {
+        "related_to": [
+          "tree",
+          "wind",
+          "bird",
+          "river"
+        ],
+        "relationship": "Nest",
+        "word": "bed"
+      },
+      {
+        "related_to": [
+          "water",
+          "cat",
+          "phone",
+          "road"
+        ],
+        "relationship": "Stream",
+        "word": "earth"
+      }
+    ],
+    "row5": [
+      {
+        "related_to": [
+          "light",
+          "house",
+          "fire",
+          "dog"
+        ],
+        "relationship": "Candle",
+        "word": "moon"
+      },
+      {
+        "related_to": [
+          "tree",
+          "wind",
+          "bird",
+          "bed"
+        ],
+        "relationship": "Nest",
+        "word": "river"
+      },
+      {
+        "related_to": [
+          "water",
+          "cat",
+          "phone",
+          "earth"
+        ],
+        "relationship": "Stream",
+        "word": "road"
+      }
+    ]
+  }
+}
