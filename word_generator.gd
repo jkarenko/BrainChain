@@ -40,18 +40,24 @@ func generate_daily_words():
     ]
     
     var prompt = """
-    Create five rows of 3 words each that can be arranged to form a chain of associated words by picking one word per row.
-    The words should have meaningful relationships that can be explained through another word that is not listed.
+    Create five rows of 3 words each that can be arranged to form a chain in which both words are connected by having the same prefix or suffix.
     
-    Rules:
-    - Only transient relationships are allowed, not direct connections.
-    - The connecting word can not be one of the words in the relationship.
-    - The connection must be obvious to a 5 year old and based in reality.
-
     Examples:
-    - "CAR" is connected to "BULL" through "HORN", because "CAR HORN" is a sound signal and "BULL HORN" is a physical feature.
-    - "BOARD" is connected to "STORM" through "SNOW", because "SNOW BOARD" and "SNOW STORM" both exist.
-    - "BELL" is connected to "FORECAST" through "WEATHER", because "BELL WEATHER" and "WEATHER FORECAST" both exist.
+    
+    (night)gown
+    (night)club
+
+    (foot)note
+    (foot)ball
+
+    (paper)plate
+    (paper)plane
+
+    (sun)flower
+    (sun)shine
+
+    (door)bell
+    (door)handle
     """
     
     var body = {

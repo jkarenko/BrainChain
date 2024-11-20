@@ -1,29 +1,29 @@
 {
   "WORD_CATEGORIES": {
     "row1": [
-      "tree",
-      "light",
-      "water"
+      "moonlight",
+      "moonstone",
+      "stonework"
     ],
     "row2": [
-      "house",
-      "fire",
-      "wind"
+      "crosswalk",
+      "walkway",
+      "wayward"
     ],
     "row3": [
-      "bird",
-      "stone",
-      "flower"
+      "bookcase",
+      "casework",
+      "workshop"
     ],
     "row4": [
-      "paper",
-      "glass",
-      "sand"
+      "headphone",
+      "headlight",
+      "lightbulb"
     ],
     "row5": [
-      "clock",
-      "wave",
-      "leaf"
+      "starfish",
+      "fishbowl",
+      "bowlful"
     ]
   },
   "WORD_RELATIONSHIPS": {
@@ -31,385 +31,110 @@
       {
         "connecting_words": [
           {
-            "connecting_word": "treehouse",
-            "explanation": "A treehouse is a structure built among the branches of a tree.",
-            "related_word": "house"
-          },
-          {
-            "connecting_word": "tree",
-            "explanation": "Birds often build nests in trees.",
-            "related_word": "bird"
-          },
-          {
-            "connecting_word": "tree",
-            "explanation": "Paper is made from the pulp of trees.",
-            "related_word": "paper"
-          },
-          {
-            "connecting_word": "tree",
-            "explanation": "Leaves grow on trees.",
-            "related_word": "leaf"
+            "connecting_word": "moon",
+            "explanation": "Moonlight and moonstone are connected through the prefix 'moon'.",
+            "related_word": "moonstone"
           }
         ],
-        "word": "tree"
+        "word": "moonlight"
       },
       {
         "connecting_words": [
           {
-            "connecting_word": "light",
-            "explanation": "Fire produces light.",
-            "related_word": "fire"
-          },
-          {
-            "connecting_word": "light",
-            "explanation": "A light stone is one that is not heavy.",
-            "related_word": "stone"
-          },
-          {
-            "connecting_word": "light",
-            "explanation": "Glass can transmit light.",
-            "related_word": "glass"
-          },
-          {
-            "connecting_word": "light",
-            "explanation": "Light waves are a form of electromagnetic radiation.",
-            "related_word": "wave"
+            "connecting_word": "stone",
+            "explanation": "Moonstone and stonework are connected through the suffix 'stone'.",
+            "related_word": "stonework"
           }
         ],
-        "word": "light"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "Wind can create waves on water.",
-            "related_word": "wind"
-          },
-          {
-            "connecting_word": "water",
-            "explanation": "Flowers need water to grow.",
-            "related_word": "flower"
-          },
-          {
-            "connecting_word": "water",
-            "explanation": "Sand is often found near water bodies like beaches.",
-            "related_word": "sand"
-          },
-          {
-            "connecting_word": "water",
-            "explanation": "A water clock is an ancient time-measuring device.",
-            "related_word": "clock"
-          }
-        ],
-        "word": "water"
+        "word": "moonstone"
       }
     ],
     "row2": [
       {
         "connecting_words": [
           {
-            "connecting_word": "treehouse",
-            "explanation": "A treehouse is a structure built among the branches of a tree.",
-            "related_word": "tree"
-          },
-          {
-            "connecting_word": "stone",
-            "explanation": "A stone house is built using stones.",
-            "related_word": "stone"
-          },
-          {
-            "connecting_word": "glasshouse",
-            "explanation": "A glasshouse is a building made largely of glass.",
-            "related_word": "glass"
-          },
-          {
-            "connecting_word": "house",
-            "explanation": "A wave house is a type of architectural design.",
-            "related_word": "wave"
+            "connecting_word": "walk",
+            "explanation": "Crosswalk and walkway are connected through the suffix 'walk'.",
+            "related_word": "walkway"
           }
         ],
-        "word": "house"
+        "word": "crosswalk"
       },
       {
         "connecting_words": [
           {
-            "connecting_word": "light",
-            "explanation": "Fire produces light.",
-            "related_word": "light"
-          },
-          {
-            "connecting_word": "firebird",
-            "explanation": "A firebird is a mythical creature associated with fire.",
-            "related_word": "bird"
-          },
-          {
-            "connecting_word": "fire",
-            "explanation": "Paper can catch fire easily.",
-            "related_word": "paper"
-          },
-          {
-            "connecting_word": "fire",
-            "explanation": "A fire leaf could refer to a leaf that is burning.",
-            "related_word": "leaf"
+            "connecting_word": "way",
+            "explanation": "Walkway and wayward are connected through the suffix 'way'.",
+            "related_word": "wayward"
           }
         ],
-        "word": "fire"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "Wind can create waves on water.",
-            "related_word": "water"
-          },
-          {
-            "connecting_word": "windflower",
-            "explanation": "A windflower is a type of flower that grows in windy areas.",
-            "related_word": "flower"
-          },
-          {
-            "connecting_word": "sand",
-            "explanation": "Wind can move sand, creating dunes.",
-            "related_word": "sand"
-          },
-          {
-            "connecting_word": "wind",
-            "explanation": "A wind clock could refer to a clock powered by wind.",
-            "related_word": "clock"
-          }
-        ],
-        "word": "wind"
+        "word": "walkway"
       }
     ],
     "row3": [
       {
         "connecting_words": [
           {
-            "connecting_word": "tree",
-            "explanation": "Birds often build nests in trees.",
-            "related_word": "tree"
-          },
-          {
-            "connecting_word": "firebird",
-            "explanation": "A firebird is a mythical creature associated with fire.",
-            "related_word": "fire"
-          },
-          {
-            "connecting_word": "bird",
-            "explanation": "A glass bird is a decorative item made of glass.",
-            "related_word": "glass"
-          },
-          {
-            "connecting_word": "bird",
-            "explanation": "A leaf bird is a type of bird that camouflages with leaves.",
-            "related_word": "leaf"
+            "connecting_word": "case",
+            "explanation": "Bookcase and casework are connected through the suffix 'case'.",
+            "related_word": "casework"
           }
         ],
-        "word": "bird"
+        "word": "bookcase"
       },
       {
         "connecting_words": [
           {
-            "connecting_word": "light",
-            "explanation": "A light stone is one that is not heavy.",
-            "related_word": "light"
-          },
-          {
-            "connecting_word": "stone",
-            "explanation": "A stone house is built using stones.",
-            "related_word": "house"
-          },
-          {
-            "connecting_word": "sandstone",
-            "explanation": "Sandstone is a type of rock formed from sand.",
-            "related_word": "sand"
-          },
-          {
-            "connecting_word": "stone",
-            "explanation": "A wave stone could refer to a stone shaped by waves.",
-            "related_word": "wave"
+            "connecting_word": "work",
+            "explanation": "Casework and workshop are connected through the prefix 'work'.",
+            "related_word": "workshop"
           }
         ],
-        "word": "stone"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "Flowers need water to grow.",
-            "related_word": "water"
-          },
-          {
-            "connecting_word": "windflower",
-            "explanation": "A windflower is a type of flower that grows in windy areas.",
-            "related_word": "wind"
-          },
-          {
-            "connecting_word": "paper",
-            "explanation": "Paper flowers are decorative items made from paper.",
-            "related_word": "paper"
-          },
-          {
-            "connecting_word": "flower",
-            "explanation": "A flower clock is a garden design that tells time using flowers.",
-            "related_word": "clock"
-          }
-        ],
-        "word": "flower"
+        "word": "casework"
       }
     ],
     "row4": [
       {
         "connecting_words": [
           {
-            "connecting_word": "tree",
-            "explanation": "Paper is made from the pulp of trees.",
-            "related_word": "tree"
-          },
-          {
-            "connecting_word": "fire",
-            "explanation": "Paper can catch fire easily.",
-            "related_word": "fire"
-          },
-          {
-            "connecting_word": "paper",
-            "explanation": "Paper flowers are decorative items made from paper.",
-            "related_word": "flower"
-          },
-          {
-            "connecting_word": "paper",
-            "explanation": "A wave paper could refer to a paper with wave patterns.",
-            "related_word": "wave"
+            "connecting_word": "head",
+            "explanation": "Headphone and headlight are connected through the prefix 'head'.",
+            "related_word": "headlight"
           }
         ],
-        "word": "paper"
+        "word": "headphone"
       },
       {
         "connecting_words": [
           {
             "connecting_word": "light",
-            "explanation": "Glass can transmit light.",
-            "related_word": "light"
-          },
-          {
-            "connecting_word": "glasshouse",
-            "explanation": "A glasshouse is a building made largely of glass.",
-            "related_word": "house"
-          },
-          {
-            "connecting_word": "bird",
-            "explanation": "A glass bird is a decorative item made of glass.",
-            "related_word": "bird"
-          },
-          {
-            "connecting_word": "glass",
-            "explanation": "A glass clock is a clock with a glass casing.",
-            "related_word": "clock"
+            "explanation": "Headlight and lightbulb are connected through the suffix 'light'.",
+            "related_word": "lightbulb"
           }
         ],
-        "word": "glass"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "Sand is often found near water bodies like beaches.",
-            "related_word": "water"
-          },
-          {
-            "connecting_word": "sand",
-            "explanation": "Wind can move sand, creating dunes.",
-            "related_word": "wind"
-          },
-          {
-            "connecting_word": "sandstone",
-            "explanation": "Sandstone is a type of rock formed from sand.",
-            "related_word": "stone"
-          },
-          {
-            "connecting_word": "sand",
-            "explanation": "A sand leaf could refer to a leaf covered in sand.",
-            "related_word": "leaf"
-          }
-        ],
-        "word": "sand"
+        "word": "headlight"
       }
     ],
     "row5": [
       {
         "connecting_words": [
           {
-            "connecting_word": "water",
-            "explanation": "A water clock is an ancient time-measuring device.",
-            "related_word": "water"
-          },
-          {
-            "connecting_word": "wind",
-            "explanation": "A wind clock could refer to a clock powered by wind.",
-            "related_word": "wind"
-          },
-          {
-            "connecting_word": "flower",
-            "explanation": "A flower clock is a garden design that tells time using flowers.",
-            "related_word": "flower"
-          },
-          {
-            "connecting_word": "glass",
-            "explanation": "A glass clock is a clock with a glass casing.",
-            "related_word": "glass"
+            "connecting_word": "fish",
+            "explanation": "Starfish and fishbowl are connected through the suffix 'fish'.",
+            "related_word": "fishbowl"
           }
         ],
-        "word": "clock"
+        "word": "starfish"
       },
       {
         "connecting_words": [
           {
-            "connecting_word": "light",
-            "explanation": "Light waves are a form of electromagnetic radiation.",
-            "related_word": "light"
-          },
-          {
-            "connecting_word": "house",
-            "explanation": "A wave house is a type of architectural design.",
-            "related_word": "house"
-          },
-          {
-            "connecting_word": "stone",
-            "explanation": "A wave stone could refer to a stone shaped by waves.",
-            "related_word": "stone"
-          },
-          {
-            "connecting_word": "paper",
-            "explanation": "A wave paper could refer to a paper with wave patterns.",
-            "related_word": "paper"
+            "connecting_word": "bowl",
+            "explanation": "Fishbowl and bowlful are connected through the suffix 'bowl'.",
+            "related_word": "bowlful"
           }
         ],
-        "word": "wave"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "tree",
-            "explanation": "Leaves grow on trees.",
-            "related_word": "tree"
-          },
-          {
-            "connecting_word": "fire",
-            "explanation": "A fire leaf could refer to a leaf that is burning.",
-            "related_word": "fire"
-          },
-          {
-            "connecting_word": "bird",
-            "explanation": "A leaf bird is a type of bird that camouflages with leaves.",
-            "related_word": "bird"
-          },
-          {
-            "connecting_word": "sand",
-            "explanation": "A sand leaf could refer to a leaf covered in sand.",
-            "related_word": "sand"
-          }
-        ],
-        "word": "leaf"
+        "word": "fishbowl"
       }
     ]
   }

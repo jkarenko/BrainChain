@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_menu"]
 [ext_resource type="Texture2D" uid="uid://buarxijcrejlj" path="res://Resources/BrainChain_Logo.png" id="2_0u4de"]
+[ext_resource type="PackedScene" uid="uid://b8p4q7c5h6j8v" path="res://loading_panel.tscn" id="2_loading"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -58,3 +59,12 @@ custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "How to Play"
+
+[node name="GenerateButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Generate New Words"
+
+[node name="LoadingPanel" parent="." instance=ExtResource("2_loading")]
+layout_mode = 1
