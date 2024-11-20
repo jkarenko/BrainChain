@@ -29,15 +29,13 @@ func _ready():
     
     # Start generating new words
     $LoadingPanel.show()
-    word_generator.generate_daily_words()
+    word_generator.generate_and_save_words()
 
 func _on_words_saved():
-    # Force reload of word data
+    # Only reload WordData if it doesn't exist
     var word_data = get_node_or_null("/root/WordData")
-    if word_data:
-        word_data.queue_free()
-    await get_tree().process_frame
-    add_child(load("res://word_data.gd").new())
+    if not word_data:
+        add_child(load("res://word_data.gd").new())
     
     # Initialize game with words from all rows
     available_words = []
