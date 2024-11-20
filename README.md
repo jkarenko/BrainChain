@@ -1,7 +1,15 @@
 # BrainChain
 
-BrainChain is a word association game where players create chains of related words. Each word must have a meaningful connection to the previous word, whether through compound words, strong associations, or indirect relationships via common connecting words.
+BrainChain is a word morpheme puzzle game where players identify common prefixes or suffixes that can combine with multiple words. Each round presents three words that can all be combined with the same morpheme to create compound words.
 
-## Demonstration
+## How to Play
+1. You'll be shown sets of three words
+2. Find the common morpheme (prefix/suffix) that can combine with all three words
+3. Example: Given "study", "estimate", "rate" → "under" 
+   - Creates: "understudy", "underestimate", "underrate"
+4. Complete all five sets to finish the game
 
-![BrainChain Demo](BrainChain_demo.gif)
+## Examples of Word Sets
+- "wheel", "over", "trap" → "fly" (flywheel, flyover, flytrap)
+- "walk", "word", "stitch" → "cross" (crosswalk, crossword, crossstitch)
+- "side", "load", "time" → "down" (downside, download, downtime)

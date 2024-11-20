@@ -48,34 +48,27 @@ theme_override_constants/separation = 20
 [node name="Step1" type="Label" parent="VBoxContainer/Instructions"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "1. Choose 5 words from the options presented"
+text = "1. You'll be shown 3 words at a time"
 autowrap_mode = 3
 
 [node name="Step2" type="Label" parent="VBoxContainer/Instructions"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "2. Each word should relate to the previous one"
+text = "2. Each set of words can be combined with a common morpheme (prefix or suffix) to create compound words"
 autowrap_mode = 3
 
 [node name="Step3" type="Label" parent="VBoxContainer/Instructions"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "3. After selecting all words, you can drag to reorder them"
+text = "3. Type the common morpheme to score points
+Example: 'due', 'lap', 'take' → 'over'
+(creates 'overdue', 'overlap', 'overtake')"
 autowrap_mode = 3
 
 [node name="Step4" type="Label" parent="VBoxContainer/Instructions"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "4. Score points for related words:
-• Direct connections score higher
-• Indirect connections through common words
-• Bonus points for chains of related words"
-autowrap_mode = 3
-
-[node name="Step5" type="Label" parent="VBoxContainer/Instructions"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "5. Click on words to see their connections"
+text = "4. Complete 5 sets of words to finish the game"
 autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="VBoxContainer"]
