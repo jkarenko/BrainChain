@@ -1,191 +1,44 @@
 {
-  "WORD_CATEGORIES": {
-    "row1": [
-      "(moon)light",
-      "(moon)walk",
-      "(moon)beam"
-    ],
-    "row2": [
-      "(book)mark",
-      "(book)case",
-      "(book)worm"
-    ],
-    "row3": [
-      "(rain)coat",
-      "(rain)fall",
-      "(rain)bow"
-    ],
-    "row4": [
-      "(tree)house",
-      "(tree)top",
-      "(tree)trunk"
-    ],
-    "row5": [
-      "(water)fall",
-      "(water)melon",
-      "(water)proof"
-    ]
-  },
-  "WORD_RELATIONSHIPS": {
-    "row1": [
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "moon",
-            "explanation": "A 'moonwalk' is a type of walk performed on Earth but is reminiscent of an astronaut walking on the moon, much like 'moonlight' is the light from the moon.",
-            "related_word": "moonwalk"
-          }
-        ],
-        "word": "moonlight"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "moon",
-            "explanation": "'Moonbeam' refers to a ray of moonlight, sharing the celestial theme with 'moonwalk', which is linked to the moon's imagery.",
-            "related_word": "moonbeam"
-          }
-        ],
-        "word": "moonwalk"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "moon",
-            "explanation": "Both 'moonbeam' and 'moonlight' derive from the light emitted by the moon, connecting through the celestial body.",
-            "related_word": "moonlight"
-          }
-        ],
-        "word": "moonbeam"
-      }
-    ],
-    "row2": [
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "book",
-            "explanation": "A 'bookmark' is used to mark a place in a 'book', and a 'bookcase' is used to store 'books'.",
-            "related_word": "bookcase"
-          }
-        ],
-        "word": "bookmark"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "book",
-            "explanation": "A 'bookworm' is someone who loves reading 'books', which are stored in a 'bookcase'.",
-            "related_word": "bookworm"
-          }
-        ],
-        "word": "bookcase"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "book",
-            "explanation": "A 'bookmark' is a tool often used by a 'bookworm' to keep their place in a 'book'.",
-            "related_word": "bookmark"
-          }
-        ],
-        "word": "bookworm"
-      }
-    ],
-    "row3": [
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "rain",
-            "explanation": "A 'raincoat' is worn to protect from 'rain', which can be measured as 'rainfall'.",
-            "related_word": "rainfall"
-          }
-        ],
-        "word": "raincoat"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "rain",
-            "explanation": "'Rainfall' is necessary for the conditions that create a 'rainbow'.",
-            "related_word": "rainbow"
-          }
-        ],
-        "word": "rainfall"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "rain",
-            "explanation": "The 'rain' in 'rainbow' is the same weather condition that necessitates a 'raincoat'.",
-            "related_word": "raincoat"
-          }
-        ],
-        "word": "rainbow"
-      }
-    ],
-    "row4": [
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "tree",
-            "explanation": "A 'treehouse' is often built among the 'tree's branches, high in the 'treetop'.",
-            "related_word": "treetop"
-          }
-        ],
-        "word": "treehouse"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "tree",
-            "explanation": "The 'treetop' is the topmost part of the 'tree', while the 'tree trunk' supports and connects to it.",
-            "related_word": "treetrunk"
-          }
-        ],
-        "word": "treetop"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "tree",
-            "explanation": "A 'treehouse' may be built using the 'tree trunk' as a support structure.",
-            "related_word": "treehouse"
-          }
-        ],
-        "word": "treetrunk"
-      }
-    ],
-    "row5": [
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "A 'waterfall' involves a flow of 'water', and 'watermelon' contains a large amount of 'water'.",
-            "related_word": "watermelon"
-          }
-        ],
-        "word": "waterfall"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "'Watermelon' is a fruit that is naturally resilient to water damage, unlike 'waterproof' objects which are designed to resist water.",
-            "related_word": "waterproof"
-          }
-        ],
-        "word": "watermelon"
-      },
-      {
-        "connecting_words": [
-          {
-            "connecting_word": "water",
-            "explanation": "While a 'waterfall' involves a cascade of 'water', 'waterproof' implies resistance to 'water', contrasting with the abundant water in a waterfall.",
-            "related_word": "waterfall"
-          }
-        ],
-        "word": "waterproof"
-      }
-    ]
+  "ROWS": {
+    "row1": {
+      "prefix": "book",
+      "words": [
+        "case",
+        "store",
+        "mark"
+      ]
+    },
+    "row2": {
+      "prefix": "star",
+      "words": [
+        "fish",
+        "light",
+        "gaze"
+      ]
+    },
+    "row3": {
+      "prefix": "water",
+      "words": [
+        "fall",
+        "mark",
+        "melon"
+      ]
+    },
+    "row4": {
+      "prefix": "fire",
+      "words": [
+        "place",
+        "fly",
+        "wood"
+      ]
+    },
+    "row5": {
+      "prefix": "moon",
+      "words": [
+        "light",
+        "walk",
+        "stone"
+      ]
+    }
   }
 }

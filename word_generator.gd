@@ -40,29 +40,34 @@ func generate_daily_words():
     ]
     
     var prompt = """
-    Create five rows of 3 words. The 3 words in a row must have a common prefix or suffix and the player's goal is to guess the prefix or suffix.
+    Create five rows of 3 words. The 3 words in a row must have a common morpheme and the player's goal is to guess the morpheme.
+
+    Examples of triplets with common morphemes:
     
-    Examples where the connecting word is in parentheses. Only the word after the parentheses should be used:
-    
-    (night)gown
-    (night)club
-    (night)light
+    night
+    -gown
+    -club
+    -light
 
-    (foot)note
-    (foot)ball
-    (foot)bridge
+    foot
+    -note
+    -ball
+    -bridge
 
-    (paper)plate
-    (paper)plane
-    (paper)clip
+    paper
+    -plate
+    -plane
+    -clip
 
-    (sun)flower
-    (sun)shine
-    (sun)set
+    sun
+    -flower
+    -shine
+    -set
 
-    (door)bell
-    (door)handle
-    (door)knob
+    door
+    -bell
+    -handle
+    -knob
     """
     
     var body = {
@@ -70,7 +75,7 @@ func generate_daily_words():
         "messages": [
             {
                 "role": "system",
-                "content": "You are a word expert that creates words with common prefixes or suffixes."
+                "content": "You are a word expert that creates compound words with common morphemes."
             },
             {
                 "role": "user",
@@ -80,179 +85,83 @@ func generate_daily_words():
         "response_format": {
             "type": "json_schema",
             "json_schema": {
-                "name": "word_chain_schema",
+                "name": "word_prefix_game_schema",
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "WORD_CATEGORIES": {
+                    "ROWS": {
+                        "type": "object",
+                        "properties": {
+                        "row1": {
                             "type": "object",
                             "properties": {
-                                "row1": {
-                                    "type": "array",
-                                    "items": {"type": "string"},
-                                    "minItems": 3,
-                                    "maxItems": 3
-                                },
-                                "row2": {
-                                    "type": "array",
-                                    "items": {"type": "string"},
-                                    "minItems": 3,
-                                    "maxItems": 3
-                                },
-                                "row3": {
-                                    "type": "array",
-                                    "items": {"type": "string"},
-                                    "minItems": 3,
-                                    "maxItems": 3
-                                },
-                                "row4": {
-                                    "type": "array",
-                                    "items": {"type": "string"},
-                                    "minItems": 3,
-                                    "maxItems": 3
-                                },
-                                "row5": {
-                                    "type": "array",
-                                    "items": {"type": "string"},
-                                    "minItems": 3,
-                                    "maxItems": 3
-                                }
+                            "prefix": { "type": "string" },
+                            "words": {
+                                "type": "array",
+                                "items": { "type": "string" },
+                                "minItems": 3,
+                                "maxItems": 3
+                            }
                             },
-                            "required": ["row1", "row2", "row3", "row4", "row5"]
+                            "required": ["prefix", "words"]
                         },
-                        "WORD_RELATIONSHIPS": {
+                        "row2": {
                             "type": "object",
                             "properties": {
-                                "row1": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "word": {"type": "string"},
-                                            "connecting_words": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "connecting_word": {"type": "string"},
-                                                        "related_word": {"type": "string"},
-                                                        "explanation": {
-                                                            "type": "string",
-                                                            "description": "Explains how both words connect through the connecting_word"
-                                                        }
-                                                    },
-                                                    "required": ["connecting_word", "related_word", "explanation"]
-                                                }
-                                            }
-                                        },
-                                        "required": ["word", "connecting_words"]
-                                    }
-                                },
-                                "row2": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "word": {"type": "string"},
-                                            "connecting_words": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "connecting_word": {"type": "string"},
-                                                        "related_word": {"type": "string"},
-                                                        "explanation": {
-                                                            "type": "string",
-                                                            "description": "Explains how both words connect through the connecting_word"
-                                                        }
-                                                    },
-                                                    "required": ["connecting_word", "related_word", "explanation"]
-                                                }
-                                            }
-                                        },
-                                        "required": ["word", "connecting_words"]
-                                    }
-                                },
-                                "row3": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "word": {"type": "string"},
-                                            "connecting_words": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "connecting_word": {"type": "string"},
-                                                        "related_word": {"type": "string"},
-                                                        "explanation": {
-                                                            "type": "string",
-                                                            "description": "Explains how both words connect through the connecting_word"
-                                                        }
-                                                    },
-                                                    "required": ["connecting_word", "related_word", "explanation"]
-                                                }
-                                            }
-                                        },
-                                        "required": ["word", "connecting_words"]
-                                    }
-                                },
-                                "row4": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "word": {"type": "string"},
-                                            "connecting_words": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "connecting_word": {"type": "string"},
-                                                        "related_word": {"type": "string"},
-                                                        "explanation": {
-                                                            "type": "string",
-                                                            "description": "Explains how both words connect through the connecting_word"
-                                                        }
-                                                    },
-                                                    "required": ["connecting_word", "related_word", "explanation"]
-                                                }
-                                            }
-                                        },
-                                        "required": ["word", "connecting_words"]
-                                    }
-                                },
-                                "row5": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "word": {"type": "string"},
-                                            "connecting_words": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "connecting_word": {"type": "string"},
-                                                        "related_word": {"type": "string"},
-                                                        "explanation": {
-                                                            "type": "string",
-                                                            "description": "Explains how both words connect through the connecting_word"
-                                                        }
-                                                    },
-                                                    "required": ["connecting_word", "related_word", "explanation"]
-                                                }
-                                            }
-                                        },
-                                        "required": ["word", "connecting_words"]
-                                    }
-                                }
+                            "prefix": { "type": "string" },
+                            "words": {
+                                "type": "array",
+                                "items": { "type": "string" },
+                                "minItems": 3,
+                                "maxItems": 3
+                            }
                             },
-                            "required": ["row1", "row2", "row3", "row4", "row5"]
+                            "required": ["prefix", "words"]
+                        },
+                        "row3": {
+                            "type": "object",
+                            "properties": {
+                            "prefix": { "type": "string" },
+                            "words": {
+                                "type": "array",
+                                "items": { "type": "string" },
+                                "minItems": 3,
+                                "maxItems": 3
+                            }
+                            },
+                            "required": ["prefix", "words"]
+                        },
+                        "row4": {
+                            "type": "object",
+                            "properties": {
+                            "prefix": { "type": "string" },
+                            "words": {
+                                "type": "array",
+                                "items": { "type": "string" },
+                                "minItems": 3,
+                                "maxItems": 3
+                            }
+                            },
+                            "required": ["prefix", "words"]
+                        },
+                        "row5": {
+                            "type": "object",
+                            "properties": {
+                            "prefix": { "type": "string" },
+                            "words": {
+                                "type": "array",
+                                "items": { "type": "string" },
+                                "minItems": 3,
+                                "maxItems": 3
+                            }
+                            },
+                            "required": ["prefix", "words"]
                         }
+                        },
+                        "required": ["row1", "row2", "row3", "row4", "row5"]
+                    }
                     },
-                    "required": ["WORD_CATEGORIES", "WORD_RELATIONSHIPS"]
+                    "required": ["ROWS"]
                 }
             }
         },
@@ -314,36 +223,30 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
     emit_signal("generation_completed", word_data)
 
 func _validate_word_data(data: Dictionary) -> bool:
-    if not data.has_all(["WORD_CATEGORIES", "WORD_RELATIONSHIPS"]):
-        print("Missing required keys in data: ", data.keys())
+    if not data.has("ROWS"):
+        print("Missing ROWS key in data: ", data.keys())
         return false
     
-    var categories = data["WORD_CATEGORIES"]
-    if not categories is Dictionary:
-        print("WORD_CATEGORIES is not a dictionary: ", typeof(categories))
+    var rows = data["ROWS"]
+    if not rows is Dictionary:
+        print("ROWS is not a dictionary: ", typeof(rows))
         return false
     
-    var relationships = data["WORD_RELATIONSHIPS"]
-    if not relationships is Dictionary:
-        print("WORD_RELATIONSHIPS is not a dictionary: ", typeof(relationships))
-        return false
-    
-    # Validate that all categories contain arrays
-    for category_name in categories.keys():
-        if not categories[category_name] is Array:
-            print("Category ", category_name, " is not an array")
+    # Validate each row has the required structure
+    for row_key in rows.keys():
+        var row = rows[row_key]
+        if not row is Dictionary:
+            print("Row ", row_key, " is not a dictionary")
             return false
-    
-    # Validate relationships structure
-    # for word1 in relationships.keys():
-    #     if not relationships[word1] is Dictionary:
-    #         print("Relationship for ", word1, " is not a dictionary")
-    #         return false
-    #     for word2 in relationships[word1].keys():
-    #         var rel_type = relationships[word1][word2]
-    #         if not rel_type in ["strong", "thematic", "compound"]:
-    #             print("Invalid relationship type: ", rel_type)
-    #             return false
+        if not row.has_all(["prefix", "words"]):
+            print("Row ", row_key, " missing required keys")
+            return false
+        if not row["words"] is Array:
+            print("Words in row ", row_key, " is not an array")
+            return false
+        if row["words"].size() != 3:
+            print("Row ", row_key, " does not have exactly 3 words")
+            return false
     
     return true
 
