@@ -274,10 +274,46 @@ func generate_and_save_words():
     generate_daily_words()
 
 func _on_generation_completed(data: Dictionary):
+    print("Generation completed with data: ", data)
+    # Process the words to remove prefixes
+    var processed_data = data.duplicate(true)
+    for row_key in processed_data["ROWS"].keys():
+        var row = processed_data["ROWS"][row_key]
+        var prefix = row["prefix"]
+        var words = row["words"]
+        
+        # Process each word to remove the prefix and hyphen
+        for i in range(words.size()):
+            var word = words[i]
+            # Remove prefix if it's at the start (case: -word)
+            if word.begins_with("-"):
+                words[i] = word.substr(1)  # Remove hyphen
+                if words[i].begins_with(prefix):  # Also remove prefix if present
+                    words[i] = words[i].substr(prefix.length())
+            # Remove prefix if it's at the end (case: word-)
+            elif word.ends_with("-"):
+                words[i] = word.substr(0, word.length() - 1)  # Remove hyphen
+                if words[i].ends_with(prefix):  # Also remove prefix if present
+                    words[i] = words[i].substr(0, words[i].length() - prefix.length())
+            # Handle case where prefix is in the middle (case: word-word)
+            elif "-" in word:
+                var parts = word.split("-")
+                if parts.size() == 2:
+                    # Take the part that isn't the prefix
+                    if parts[0] == prefix:
+                        words[i] = parts[1]
+                    elif parts[1] == prefix:
+                        words[i] = parts[0]
+                    else:
+                        # If neither part is the prefix, take the second part
+                        words[i] = parts[1]
+    
+    print("Processed data: ", processed_data)  # Add this to verify processing
+    
     # Save to file
     var file = FileAccess.open("res://word_data.json", FileAccess.WRITE)
     if file:
-        file.store_string(JSON.stringify(data, "  "))
+        file.store_string(JSON.stringify(processed_data, "  "))
         file.close()
         emit_signal("words_saved")
     else:
