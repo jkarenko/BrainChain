@@ -47,6 +47,14 @@ func generate_daily_words():
     - Storm and injury are related through the word "brain", because brainstorm and brain injury are both common phrases.
     - Book and fish are related through the word "worm" because of the phrases bookworm and worm fishing.
     - Car and bull are related through the word "horn" because car horn is a sound signal and bull horn is a physical feature.
+
+    Only use common English words and avoid using proper nouns or names.
+    Only use words that are appropriate for all audiences and avoid any offensive or inappropriate words.
+    Only use words that are spelled correctly and avoid using slang or abbreviations.
+    Only use words that are distinct and avoid using variations of the same word.
+    Never use the same word in multiple rows or relationships.
+    Never use direct connections for relationships, such as "car" and "engine".
+    Only use relationships the are connected through any third word, such as Car -> Horn -> Bull.
     """
     
     var body = {
@@ -191,7 +199,7 @@ func generate_daily_words():
                 }
             }
         },
-        "temperature": 0.7,
+        "temperature": 0.1,
         "max_tokens": 5000
     }
     
