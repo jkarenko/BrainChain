@@ -167,8 +167,8 @@ func generate_daily_words():
                 }
             }
         },
-        "temperature": 0.9,
-        "max_tokens": 5000
+        "temperature": 1.2,
+        "max_tokens": 1000
     }
     
     var error = http_request.request(
