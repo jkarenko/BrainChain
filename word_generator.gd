@@ -40,24 +40,29 @@ func generate_daily_words():
     ]
     
     var prompt = """
-    Create five rows of 3 words each that can be arranged to form a chain in which both words are connected by having the same prefix or suffix.
+    Create five rows of 3 words. The 3 words in a row must have a common prefix or suffix and the player's goal is to guess the prefix or suffix.
     
-    Examples where the connecting word is in parentheses. Only the suffixed word should be used:
+    Examples where the connecting word is in parentheses. Only the word after the parentheses should be used:
     
     (night)gown
     (night)club
+    (night)light
 
     (foot)note
     (foot)ball
+    (foot)bridge
 
     (paper)plate
     (paper)plane
+    (paper)clip
 
     (sun)flower
     (sun)shine
+    (sun)set
 
     (door)bell
     (door)handle
+    (door)knob
     """
     
     var body = {
@@ -65,7 +70,7 @@ func generate_daily_words():
         "messages": [
             {
                 "role": "system",
-                "content": "You are a word association expert that generates word chains with indirect relationships."
+                "content": "You are a word expert that creates words with common prefixes or suffixes."
             },
             {
                 "role": "user",

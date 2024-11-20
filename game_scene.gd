@@ -10,6 +10,7 @@ var can_drag = false
 var dragged_row = null
 var original_pos = Vector2.ZERO
 var row_positions = []
+var current_word_index = 0
 
 func _ready():
 	var background = ColorRect.new()
@@ -30,21 +31,17 @@ func _ready():
 	var word_data_script = preload("res://word_data.gd")
 	for row_key in word_data_script.WORD_CATEGORIES.keys():
 		available_words.append_array(word_data_script.WORD_CATEGORIES[row_key])
-	available_words.shuffle()
 	
 	setup_first_row()
 
 func get_random_words(count: int) -> Array:
 	var words = []
-	if available_words.size() < count:
-		available_words = []
-		var word_data_script = preload("res://word_data.gd")
-		for row_key in word_data_script.WORD_CATEGORIES.keys():
-				available_words.append_array(word_data_script.WORD_CATEGORIES[row_key])
-		available_words.shuffle()
+	if current_word_index + count > available_words.size():
+		current_word_index = 0
 	
 	for i in range(count):
-		words.append(available_words.pop_front())
+		words.append(available_words[current_word_index])
+		current_word_index += 1
 	return words
 
 func create_button_style(is_hover: bool = false) -> StyleBoxFlat:
