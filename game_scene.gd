@@ -20,10 +20,10 @@ func _ready():
 	
 	$WordGrid.add_theme_constant_override("separation", 20)
 	
-	# Initialize word data
-	var word_data = get_node_or_null("/root/WordData")
-	if not word_data:
-		add_child(load("res://word_data.gd").new())
+	# Force reload of word data
+	if get_node_or_null("/root/WordData"):
+		get_node("/root/WordData").queue_free()
+	add_child(load("res://word_data.gd").new())
 	
 	# Initialize game with words from all rows
 	available_words = []

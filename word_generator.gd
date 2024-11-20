@@ -42,7 +42,7 @@ func generate_daily_words():
     var prompt = """
     Create five rows of 3 words each that can be arranged to form a chain in which both words are connected by having the same prefix or suffix.
     
-    Examples:
+    Examples where the connecting word is in parentheses. Only the suffixed word should be used:
     
     (night)gown
     (night)club
