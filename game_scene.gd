@@ -110,7 +110,7 @@ func _on_new_game_pressed():
 	word_generator.generation_failed.connect(_on_generation_failed)
 	word_generator.save_failed.connect(_on_save_failed)
 	word_generator.words_saved.connect(_on_words_saved)
-	word_generator.generate_daily_words()
+	word_generator.generate_and_save_words()
 
 func _on_generation_failed(error: String):
 	push_error("Failed to generate words: " + error)
@@ -124,15 +124,16 @@ func _on_save_failed(error: String):
 
 func _on_words_saved():
 	$LoadingPanel.hide()
-	emit_signal("new_game_requested")
+	# Reload the scene to start fresh
+	get_parent().change_scene_to("game_scene")
 
 func _on_main_menu_pressed():
 	emit_signal("return_to_main_menu")
 
 func get_next_row_words() -> Array:
 	if WordData.WORD_DATA.is_empty() or not WordData.WORD_DATA.has("ROWS"):
-		push_error("Word data not properly loaded")
-		return []
+			push_error("Word data not properly loaded")
+			return []
 		
 	var rows = WordData.WORD_DATA["ROWS"]
 	var row_keys = rows.keys()

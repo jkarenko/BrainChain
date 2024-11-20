@@ -255,20 +255,20 @@ func _validate_word_data(data: Dictionary) -> bool:
 # Example usage:
 func generate_and_save_words():
     # Check if word_data.json exists and was created today
-    if FileAccess.file_exists("res://word_data.json"):
-        var file_info = FileAccess.get_modified_time("res://word_data.json")
-        var current_date = Time.get_datetime_dict_from_system()
-        var file_date = Time.get_datetime_dict_from_unix_time(file_info)
-        print("File modified: ", file_date)
-        print("Current date: ", current_date)
+    # if FileAccess.file_exists("res://word_data.json"):
+    #     var file_info = FileAccess.get_modified_time("res://word_data.json")
+    #     var current_date = Time.get_datetime_dict_from_system()
+    #     var file_date = Time.get_datetime_dict_from_unix_time(file_info)
+    #     print("File modified: ", file_date)
+    #     print("Current date: ", current_date)
 
         # Check if file was created today
-        if file_date.year == current_date.year and \
-           file_date.month == current_date.month and \
-           file_date.day == current_date.day:
-            # File exists and was created today, no need to generate new words
-            emit_signal("words_saved")
-            return
+        # if file_date.year == current_date.year and \
+        #    file_date.month == current_date.month and \
+        #    file_date.day == current_date.day:
+        #     # File exists and was created today, no need to generate new words
+        #     emit_signal("words_saved")
+        #     return
     
     # File doesn't exist or wasn't created today, generate new words
     generate_daily_words()
