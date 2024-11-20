@@ -73,7 +73,7 @@ func generate_daily_words():
             "type": "json_schema",
             "json_schema": {
                 "name": "word_chain_schema",
-                "schema": {  # Use 'schema' instead of nesting the properties directly
+                "schema": {
                     "type": "object",
                     "properties": {
                         "WORD_CATEGORIES": {
@@ -121,13 +121,23 @@ func generate_daily_words():
                                         "type": "object",
                                         "properties": {
                                             "word": {"type": "string"},
-                                            "related_to": {
+                                            "connecting_words": {
                                                 "type": "array",
-                                                "items": {"type": "string"}
-                                            },
-                                            "relationship": {"type": "string"}
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "connecting_word": {"type": "string"},
+                                                        "related_word": {"type": "string"},
+                                                        "explanation": {
+                                                            "type": "string",
+                                                            "description": "Explains how both words connect through the connecting_word"
+                                                        }
+                                                    },
+                                                    "required": ["connecting_word", "related_word", "explanation"]
+                                                }
+                                            }
                                         },
-                                        "required": ["word", "related_to", "relationship"]
+                                        "required": ["word", "connecting_words"]
                                     }
                                 },
                                 "row2": {
@@ -136,13 +146,23 @@ func generate_daily_words():
                                         "type": "object",
                                         "properties": {
                                             "word": {"type": "string"},
-                                            "related_to": {
+                                            "connecting_words": {
                                                 "type": "array",
-                                                "items": {"type": "string"}
-                                            },
-                                            "relationship": {"type": "string"}
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "connecting_word": {"type": "string"},
+                                                        "related_word": {"type": "string"},
+                                                        "explanation": {
+                                                            "type": "string",
+                                                            "description": "Explains how both words connect through the connecting_word"
+                                                        }
+                                                    },
+                                                    "required": ["connecting_word", "related_word", "explanation"]
+                                                }
+                                            }
                                         },
-                                        "required": ["word", "related_to", "relationship"]
+                                        "required": ["word", "connecting_words"]
                                     }
                                 },
                                 "row3": {
@@ -151,13 +171,23 @@ func generate_daily_words():
                                         "type": "object",
                                         "properties": {
                                             "word": {"type": "string"},
-                                            "related_to": {
+                                            "connecting_words": {
                                                 "type": "array",
-                                                "items": {"type": "string"}
-                                            },
-                                            "relationship": {"type": "string"}
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "connecting_word": {"type": "string"},
+                                                        "related_word": {"type": "string"},
+                                                        "explanation": {
+                                                            "type": "string",
+                                                            "description": "Explains how both words connect through the connecting_word"
+                                                        }
+                                                    },
+                                                    "required": ["connecting_word", "related_word", "explanation"]
+                                                }
+                                            }
                                         },
-                                        "required": ["word", "related_to", "relationship"]
+                                        "required": ["word", "connecting_words"]
                                     }
                                 },
                                 "row4": {
@@ -166,13 +196,23 @@ func generate_daily_words():
                                         "type": "object",
                                         "properties": {
                                             "word": {"type": "string"},
-                                            "related_to": {
+                                            "connecting_words": {
                                                 "type": "array",
-                                                "items": {"type": "string"}
-                                            },
-                                            "relationship": {"type": "string"}
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "connecting_word": {"type": "string"},
+                                                        "related_word": {"type": "string"},
+                                                        "explanation": {
+                                                            "type": "string",
+                                                            "description": "Explains how both words connect through the connecting_word"
+                                                        }
+                                                    },
+                                                    "required": ["connecting_word", "related_word", "explanation"]
+                                                }
+                                            }
                                         },
-                                        "required": ["word", "related_to", "relationship"]
+                                        "required": ["word", "connecting_words"]
                                     }
                                 },
                                 "row5": {
@@ -181,19 +221,28 @@ func generate_daily_words():
                                         "type": "object",
                                         "properties": {
                                             "word": {"type": "string"},
-                                            "related_to": {
+                                            "connecting_words": {
                                                 "type": "array",
-                                                "items": {"type": "string"}
-                                            },
-                                            "relationship": {"type": "string"}
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "connecting_word": {"type": "string"},
+                                                        "related_word": {"type": "string"},
+                                                        "explanation": {
+                                                            "type": "string",
+                                                            "description": "Explains how both words connect through the connecting_word"
+                                                        }
+                                                    },
+                                                    "required": ["connecting_word", "related_word", "explanation"]
+                                                }
+                                            }
                                         },
-                                        "required": ["word", "related_to", "relationship"]
+                                        "required": ["word", "connecting_words"]
                                     }
                                 }
                             },
                             "required": ["row1", "row2", "row3", "row4", "row5"]
                         }
-
                     },
                     "required": ["WORD_CATEGORIES", "WORD_RELATIONSHIPS"]
                 }
@@ -292,6 +341,21 @@ func _validate_word_data(data: Dictionary) -> bool:
 
 # Example usage:
 func generate_and_save_words():
+    # Check if word_data.json exists and was created today
+    if FileAccess.file_exists("res://word_data.json"):
+        var file_info = FileAccess.get_modified_time("res://word_data.json")
+        var current_date = Time.get_datetime_dict_from_system()
+        var file_date = Time.get_datetime_dict_from_unix_time(file_info)
+        
+        # Check if file was created today
+        if file_date.year == current_date.year and \
+           file_date.month == current_date.month and \
+           file_date.day == current_date.day:
+            # File exists and was created today, no need to generate new words
+            emit_signal("words_saved")
+            return
+    
+    # File doesn't exist or wasn't created today, generate new words
     generate_daily_words()
 
 func _on_generation_completed(data: Dictionary):
