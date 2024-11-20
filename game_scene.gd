@@ -29,7 +29,7 @@ func _ready():
     
     # Start generating new words
     $LoadingPanel.show()
-    word_generator.generate_and_save_words()
+    word_generator.generate_daily_words()
 
 func _on_words_saved():
     # Only reload WordData if it doesn't exist

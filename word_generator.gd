@@ -43,22 +43,19 @@ func generate_daily_words():
     Create five rows of 3 words each that can be arranged to form a chain of associated words by picking one word per row.
     The words should have meaningful relationships that can be explained through another word that is not listed.
     
-    Examples:
-    - Storm and injury are related through the word "brain", because brainstorm and brain injury are both common phrases.
-    - Book and fish are related through the word "worm" because of the phrases bookworm and worm fishing.
-    - Car and bull are related through the word "horn" because car horn is a sound signal and bull horn is a physical feature.
+    Rules:
+    - Only transient relationships are allowed, not direct connections.
+    - The connecting word can not be one of the words in the relationship.
+    - The connection must be obvious to a 5 year old and based in reality.
 
-    Only use common English words and avoid using proper nouns or names.
-    Only use words that are appropriate for all audiences and avoid any offensive or inappropriate words.
-    Only use words that are spelled correctly and avoid using slang or abbreviations.
-    Only use words that are distinct and avoid using variations of the same word.
-    Never use the same word in multiple rows or relationships.
-    Never use direct connections for relationships, such as "car" and "engine".
-    Only use relationships the are connected through any third word, such as Car -> Horn -> Bull.
+    Examples:
+    - "CAR" is connected to "BULL" through "HORN", because "CAR HORN" is a sound signal and "BULL HORN" is a physical feature.
+    - "BOARD" is connected to "STORM" through "SNOW", because "SNOW BOARD" and "SNOW STORM" both exist.
+    - "BELL" is connected to "FORECAST" through "WEATHER", because "BELL WEATHER" and "WEATHER FORECAST" both exist.
     """
     
     var body = {
-        "model": "gpt-4o-2024-08-06",
+        "model": "gpt-4o",
         "messages": [
             {
                 "role": "system",
