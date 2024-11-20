@@ -1,190 +1,190 @@
 {
   "WORD_CATEGORIES": {
     "row1": [
-      "light",
-      "tree",
-      "water"
+      "lock",
+      "night",
+      "chain"
     ],
     "row2": [
-      "house",
-      "wind",
-      "cat"
+      "fire",
+      "sugar",
+      "moon"
     ],
     "row3": [
-      "fire",
-      "bird",
-      "phone"
+      "alarm",
+      "rush",
+      "water"
     ],
     "row4": [
-      "dog",
-      "bed",
-      "earth"
+      "clock",
+      "sweet",
+      "rock"
     ],
     "row5": [
-      "moon",
-      "river",
-      "road"
+      "tower",
+      "sea",
+      "line"
     ]
   },
   "WORD_RELATIONSHIPS": {
     "row1": [
       {
         "related_to": [
-          "house",
           "fire",
-          "dog",
-          "moon"
+          "alarm",
+          "clock",
+          "tower"
         ],
-        "relationship": "Candle",
-        "word": "light"
+        "relationship": "associated with",
+        "word": "lock"
       },
       {
         "related_to": [
-          "wind",
-          "bird",
-          "bed",
-          "river"
+          "moon",
+          "rush",
+          "sweet",
+          "sea"
         ],
-        "relationship": "Nest",
-        "word": "tree"
+        "relationship": "associated with",
+        "word": "night"
       },
       {
         "related_to": [
-          "cat",
-          "phone",
-          "earth",
-          "road"
+          "sugar",
+          "water",
+          "rock",
+          "line"
         ],
-        "relationship": "Stream",
-        "word": "water"
+        "relationship": "associated with",
+        "word": "chain"
       }
     ],
     "row2": [
       {
         "related_to": [
-          "light",
-          "fire",
-          "dog",
-          "moon"
+          "lock",
+          "alarm",
+          "rock",
+          "line"
         ],
-        "relationship": "Candle",
-        "word": "house"
+        "relationship": "associated with",
+        "word": "fire"
       },
       {
         "related_to": [
-          "tree",
-          "bird",
-          "bed",
-          "river"
+          "chain",
+          "rush",
+          "sweet",
+          "sea"
         ],
-        "relationship": "Nest",
-        "word": "wind"
+        "relationship": "associated with",
+        "word": "sugar"
       },
       {
         "related_to": [
+          "night",
           "water",
-          "phone",
-          "earth",
-          "road"
+          "clock",
+          "tower"
         ],
-        "relationship": "Stream",
-        "word": "cat"
+        "relationship": "associated with",
+        "word": "moon"
       }
     ],
     "row3": [
       {
         "related_to": [
-          "light",
-          "house",
-          "dog",
-          "moon"
+          "lock",
+          "fire",
+          "clock",
+          "tower"
         ],
-        "relationship": "Candle",
-        "word": "fire"
+        "relationship": "associated with",
+        "word": "alarm"
       },
       {
         "related_to": [
-          "tree",
-          "wind",
-          "bed",
-          "river"
+          "night",
+          "sugar",
+          "rock",
+          "line"
         ],
-        "relationship": "Nest",
-        "word": "bird"
+        "relationship": "associated with",
+        "word": "rush"
       },
       {
         "related_to": [
-          "water",
-          "cat",
-          "earth",
-          "road"
+          "chain",
+          "moon",
+          "sweet",
+          "sea"
         ],
-        "relationship": "Stream",
-        "word": "phone"
+        "relationship": "associated with",
+        "word": "water"
       }
     ],
     "row4": [
       {
         "related_to": [
-          "light",
-          "house",
-          "fire",
-          "moon"
+          "lock",
+          "moon",
+          "alarm",
+          "line"
         ],
-        "relationship": "Candle",
-        "word": "dog"
+        "relationship": "associated with",
+        "word": "clock"
       },
       {
         "related_to": [
-          "tree",
-          "wind",
-          "bird",
-          "river"
-        ],
-        "relationship": "Nest",
-        "word": "bed"
-      },
-      {
-        "related_to": [
+          "night",
+          "sugar",
           "water",
-          "cat",
-          "phone",
-          "road"
+          "tower"
         ],
-        "relationship": "Stream",
-        "word": "earth"
+        "relationship": "associated with",
+        "word": "sweet"
+      },
+      {
+        "related_to": [
+          "chain",
+          "fire",
+          "rush",
+          "sea"
+        ],
+        "relationship": "associated with",
+        "word": "rock"
       }
     ],
     "row5": [
       {
         "related_to": [
-          "light",
-          "house",
-          "fire",
-          "dog"
+          "lock",
+          "moon",
+          "alarm",
+          "sweet"
         ],
-        "relationship": "Candle",
-        "word": "moon"
+        "relationship": "associated with",
+        "word": "tower"
       },
       {
         "related_to": [
-          "tree",
-          "wind",
-          "bird",
-          "bed"
-        ],
-        "relationship": "Nest",
-        "word": "river"
-      },
-      {
-        "related_to": [
+          "night",
+          "sugar",
           "water",
-          "cat",
-          "phone",
-          "earth"
+          "rock"
         ],
-        "relationship": "Stream",
-        "word": "road"
+        "relationship": "associated with",
+        "word": "sea"
+      },
+      {
+        "related_to": [
+          "chain",
+          "fire",
+          "rush",
+          "clock"
+        ],
+        "relationship": "associated with",
+        "word": "line"
       }
     ]
   }
