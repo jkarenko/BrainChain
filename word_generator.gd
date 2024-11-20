@@ -51,7 +51,7 @@ func generate_daily_words():
 
     foot
     -note
-    -ball
+    club-
     -bridge
 
     paper
@@ -59,15 +59,17 @@ func generate_daily_words():
     -plane
     -clip
 
-    sun
-    -flower
-    -shine
-    -set
+    light
+    -weight
+    night-
+    sun-
 
     door
     -bell
-    -handle
+    back-
     -knob
+
+    Make sure the words are challenging to guess - they should not be obvious.
     """
     
     var body = {
