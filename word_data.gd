@@ -3,23 +3,11 @@ extends Node
 static var WORD_DATA = {}
 
 func _init():
-    load_word_data()
+    # Remove file loading since we'll keep data in memory
+    pass
 
-static func load_word_data():
-    # Load the JSON file
-    var file = FileAccess.open("res://word_data.json", FileAccess.READ)
-    if file:
-        var json = JSON.new()
-        var error = json.parse(file.get_as_text())
-        if error == OK:
-            WORD_DATA = json.get_data()
-        file.close()
-
-static func reload_word_data():
-    # Clear existing data
-    WORD_DATA.clear()
-    # Load fresh data
-    load_word_data()
+static func set_word_data(data: Dictionary):
+    WORD_DATA = data
 
 static func get_all_words() -> Array:
     var all_words = []

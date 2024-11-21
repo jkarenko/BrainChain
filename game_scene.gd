@@ -33,13 +33,15 @@ func _ready():
 	
 	$WordGrid.add_theme_constant_override("separation", 20)
 	
-	# Force reload of word data to ensure we have the latest version
-	WordData.reload_word_data()
-	
 	# Initialize game with words from all rows
 	available_words = []
 	if WordData.WORD_DATA.is_empty() or not WordData.WORD_DATA.has("ROWS"):
-		push_error("Word data not properly loaded")
+		# If no words are loaded, generate them
+		var word_generator = preload("res://word_generator.gd").new()
+		add_child(word_generator)
+		word_generator.generation_failed.connect(_on_generation_failed)
+		word_generator.words_saved.connect(_on_words_saved)
+		word_generator.generate_and_save_words()
 		return
 		
 	setup_first_row()

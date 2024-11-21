@@ -308,16 +308,11 @@ func _on_generation_completed(data: Dictionary):
                         # If neither part is the prefix, take the second part
                         words[i] = parts[1]
     
-    print("Processed data: ", processed_data)  # Add this to verify processing
+    print("Processed data: ", processed_data)
     
-    # Save to file
-    var file = FileAccess.open("res://word_data.json", FileAccess.WRITE)
-    if file:
-        file.store_string(JSON.stringify(processed_data, "  "))
-        file.close()
-        emit_signal("words_saved")
-    else:
-        emit_signal("save_failed", "Could not open word_data.json for writing")
+    # Instead of saving to file, store in memory
+    WordData.set_word_data(processed_data)
+    emit_signal("words_saved")
 
 func _on_generation_failed(error: String):
     print("Generation failed: ", error) 
@@ -328,12 +323,4 @@ func _on_save_failed(error: String):
 func generate_and_wait() -> Dictionary:
     generate_daily_words()
     await words_saved
-    # Reload the word data
-    var file = FileAccess.open("res://word_data.json", FileAccess.READ)
-    if file:
-        var json = JSON.new()
-        var error = json.parse(file.get_as_text())
-        if error == OK:
-            return json.get_data()
-        file.close()
-    return {} 
+    return WordData.WORD_DATA

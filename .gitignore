@@ -5,8 +5,5 @@
 # OpenAI API key
 openai_api_key.txt
 
-# Generated words
-word_data.json
-
 # Builds
 /build/
