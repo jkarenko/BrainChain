@@ -33,18 +33,14 @@ func _ready():
 	
 	$WordGrid.add_theme_constant_override("separation", 20)
 	
-	# Initialize game with words from all rows
-	available_words = []
-	if WordData.WORD_DATA.is_empty() or not WordData.WORD_DATA.has("ROWS"):
-		# If no words are loaded, generate them
-		var word_generator = preload("res://word_generator.gd").new()
-		add_child(word_generator)
-		word_generator.generation_failed.connect(_on_generation_failed)
-		word_generator.words_saved.connect(_on_words_saved)
-		word_generator.generate_and_save_words()
-		return
-		
-	setup_first_row()
+	# Always generate new words when starting a game
+	$LoadingPanel.show()
+	var word_generator = preload("res://word_generator.gd").new()
+	add_child(word_generator)
+	word_generator.generation_failed.connect(_on_generation_failed)
+	word_generator.save_failed.connect(_on_save_failed)
+	word_generator.words_saved.connect(_on_words_saved)
+	word_generator.generate_and_save_words()
 
 # Rename function to match its purpose
 func show_end_game_buttons():
@@ -106,6 +102,16 @@ func _create_stylebox(color: Color) -> StyleBoxFlat:
 	return style
 
 func _on_new_game_pressed():
+	# Clear existing rows
+	for child in $WordGrid.get_children():
+		child.queue_free()
+	
+	# Reset game state
+	selected_count = 0
+	current_row_index = 0
+	guessed_words.clear()
+	
+	# Generate new words
 	$LoadingPanel.show()
 	var word_generator = preload("res://word_generator.gd").new()
 	add_child(word_generator)
@@ -126,8 +132,8 @@ func _on_save_failed(error: String):
 
 func _on_words_saved():
 	$LoadingPanel.hide()
-	# Reload the scene to start fresh
-	get_parent().change_scene_to("game_scene")
+	# Instead of reloading the scene, just start the game
+	setup_first_row()
 
 func _on_main_menu_pressed():
 	emit_signal("return_to_main_menu")
