@@ -214,7 +214,24 @@ func create_word_row(words: Array):
 	input.custom_minimum_size = Vector2(300, 50)
 	input.add_theme_font_size_override("font_size", 20)
 	input.text_submitted.connect(func(text): check_guess(text, container, words))
-	input.call_deferred("grab_focus")
+	
+	if OS.has_feature("mobile"):
+		# Configure input for mobile
+		input.virtual_keyboard_enabled = true
+		input.focus_mode = Control.FOCUS_CLICK
+		
+		# Connect focus signals to handle keyboard
+		input.focus_entered.connect(func():
+			DisplayServer.virtual_keyboard_show("")
+		)
+		input.focus_exited.connect(func():
+			DisplayServer.virtual_keyboard_hide()
+		)
+		
+		# Ensure input is ready to receive touch events
+		input.mouse_filter = Control.MOUSE_FILTER_STOP
+	else:
+		input.call_deferred("grab_focus")
 	
 	input_container.add_child(input)
 	container.add_child(input_container)
