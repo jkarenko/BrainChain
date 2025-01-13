@@ -1,5 +1,7 @@
 # BrainChain
 
+![BrainChain Demo](BrainChain_demo.gif)
+
 BrainChain is a word morpheme puzzle game where players identify common prefixes or suffixes that can combine with multiple words. Each round presents three words that can all be combined with the same morpheme to create compound words.
 
 ## How to Play
